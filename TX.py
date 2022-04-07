@@ -12,4 +12,4 @@ radio = dPyMR.Transceiver(radioSerial, ownID)
 print(radio.sendMessage(msg, otherID))
 
 while(True):
-  print(radio.receiveCommand(10))
+  print(radio.receiveMessage(10))

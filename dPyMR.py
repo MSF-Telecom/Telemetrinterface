@@ -70,7 +70,7 @@ class Transceiver :
     self.dPyMRserial.flush()
     while not (byteread==self.eol):
       if(time.time() - beginTime > timeout):
-        return (None, None, 'TIMEOUT_ERROR')
+        return 'TIMEOUT_ERROR'
       byteread = self.dPyMRserial.read()
       response += byteread
 
@@ -80,22 +80,15 @@ class Transceiver :
 
   def receiveMessage(self, timeout = 2):
     # TODO : Verify & test function
-    response = b''
-    byteread = b''
-    beginTime = time.time()
-    self.dPyMRserial.flush()
-    while not '*NTF,DPMR,RXMSG,IND,' in str(response.decode('utf-8')) :
-      if(time.time() - beginTime > timeout):
-        return (None, None, 'TIMEOUT_ERROR')
-      byteread = self.dPyMRserial.read()
-      response += byteread
-    while not (byteread==self.eol):
-      byteread = self.dPyMRserial.read()
-      response += byteread
+    response = ''
     
-    self.dPyMRserial.flush()
+    beginTime = time.time()
+    while not '*NTF,DPMR,RXMSG,IND,' in response :
+      response = self.receiveCommand(timeout)
+      if(response == 'TIMEOUT_ERROR'):
+        return (None, None, response)
 
-    return (int(response.decode('utf-8').split(',')[-5]), int(response.decode('utf-8').split(',')[-3]), response.decode('utf-8').split(',')[-1][1:-2])
+    return (int(response.split(',')[-5]), int(response.split(',')[-3]), response.split(',')[-1][1:-1])
 
   def setChannel(self, channel, resetDefault = False):
     if resetDefault:

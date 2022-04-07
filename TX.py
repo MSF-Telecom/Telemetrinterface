@@ -1,10 +1,12 @@
 import serial
-from dPyMR import *
+from dPyMR import dPMR
 
-radio = serial.Serial('/dev/tty.usbserial-145230', 4800, timeout = 2)
+radioSerial = serial.Serial('/dev/tty.usbserial-145230', 4800, timeout = 2)
 
-ownID = 2
-otherID = 1
+ownID = 1107
+otherID = 1748
 msg = 'This is a test ! :D'
 
-print(sendMessage(radio, msg, otherID, ownID))
+radio = dPMR(radioSerial, ownID)
+
+print(radio.sendMessage(msg, otherID))

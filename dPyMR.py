@@ -11,14 +11,13 @@ class Transceiver :
     self.bol = b'\x02'
     self.eol = b'\x03'
 
-  def sendCommand(self, command):
-    data = self.bol + command.encode("utf-8") + self.eol
-    self.dPyMRserial.write(data)
-
   def discover(self, idRange = (0, 9999999)) :
     # TODO: Implement this function
     return ()
 
+  def sendCommand(self, command):
+    data = self.bol + command.encode("utf-8") + self.eol
+    self.dPyMRserial.write(data)
 
   def sendMessage(self, message, otherID):
     command = '*SET,DPMR,TXMSG,IND,{},{},MSG,"{}",ACK'.format(str(otherID).zfill(7), str(self.ownID).zfill(7), message)

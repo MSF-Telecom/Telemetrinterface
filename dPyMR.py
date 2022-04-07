@@ -62,9 +62,21 @@ class Transceiver :
       self.setChannel(self.DEFCH)
       return 'UNKNOWN_ERROR'
 
-  def receiveCommand(self):
-    # TODO : Implement this function
-    return None
+  def receiveCommand(self, timeout = 2):
+    # TODO : Verify & test function
+    response = b''
+    byteread = b''
+    beginTime = time.time()
+    self.dPyMRserial.flush()
+    while not (byteread==self.eol):
+      if(time.time() - beginTime > timeout):
+        return (None, None, 'TIMEOUT_ERROR')
+      byteread = self.dPyMRserial.read()
+      response += byteread
+
+    self.dPyMRserial.flush()
+
+    return response.decode('utf-8')[1:-1]
 
   def receiveMessage(self, timeout = 2):
     # TODO : Verify & test function

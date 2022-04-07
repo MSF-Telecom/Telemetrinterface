@@ -1,7 +1,7 @@
 import time
 import serial
 
-class dPMR :
+class Transceiver :
   def __init__(self, dPyMRserial, ownID, timeout = 2):
     self.dPyMRserial = dPyMRserial
     self.ownID = ownID

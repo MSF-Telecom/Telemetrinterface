@@ -31,31 +31,26 @@ class Transceiver :
     data = self.bol + command.encode("utf-8") + self.eol
     self.dPyMRserial.write(data)
 
-  def sendMessage(self, message, otherID):
+  def sendMessage(self, message, otherID, timeout = 10):
     self.setChannel(self.MSGCH, resetDefault = True)
 
     command = '*SET,DPMR,TXMSG,IND,{},{},MSG,"{}",ACK'.format(str(otherID).zfill(7), str(self.ownID).zfill(7), message)
     self.sendCommand(command)
     
-    response = b'' 
-    byteread = b''
     beginTime = time.time()
-    while not '*NTF,DPMR,TXMSG,IND,' in str(response.decode('utf-8')) :
-      if(time.time() - beginTime > self.timeout):
-        if(response == b''):
+
+    response = ''
+    while not '*NTF,DPMR,TXMSG,IND,' in response :
+      if(time.time() - beginTime > timeout):
+        if not '*NTF,DPMR,TXMSG,IND,' in response :
           self.setChannel(self.DEFCH)
           return 'TIMEOUT_ERROR'
-      byteread = self.dPyMRserial.read() #Read one byte, stuff it in a temp variable
-      response += byteread #Add it to the read string
-    while not (byteread==self.eol): #While we haven't received eol
-      byteread = self.dPyMRserial.read() #Read one byte, stuff it in a temp variable
-      response += byteread #Add it to the read string
-    self.dPyMRserial.flush()
+      response = self.receiveCommand(timeout)
 
-    if '"' + message + '",ACK,OK' in str(response.decode('utf-8')) :
+    if '"' + message + '",ACK,OK' in response :
       self.setChannel(self.DEFCH)
       return 'ACK_OK'
-    elif '"' + message + '",ACK,NG' in str(response.decode('utf-8')) :
+    elif '"' + message + '",ACK,NG' in response :
       self.setChannel(self.DEFCH)
       return 'ACK_NG'
     else :

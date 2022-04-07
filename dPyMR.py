@@ -66,9 +66,24 @@ class Transceiver :
     # TODO : Implement this function
     return None
 
-  def receiveMessage(self):
-    # TODO : Implement this function
-    return None
+  def receiveMessage(self, timeout = 2):
+    # TODO : Verify & test function
+    response = b''
+    byteread = b''
+    beginTime = time.time()
+    self.dPyMRserial.flush()
+    while not '*NTF,DPMR,RXMSG,IND,' in str(response.decode('utf-8')) :
+      if(time.time() - beginTime > timeout):
+        return (None, None, 'TIMEOUT_ERROR')
+      byteread = self.dPyMRserial.read()
+      response += byteread
+    while not (byteread==self.eol):
+      byteread = self.dPyMRserial.read()
+      response += byteread
+    
+    self.dPyMRserial.flush()
+
+    return (int(response.decode('utf-8').split(',')[-5]), int(response.decode('utf-8').split(',')[-3]), response.decode('utf-8').split(',')[-1][1:-2])
 
   def setChannel(self, channel, resetDefault = False):
     if resetDefault:

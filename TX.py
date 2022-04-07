@@ -10,3 +10,6 @@ msg = 'This is a test ! :D'
 radio = dPyMR.Transceiver(radioSerial, ownID)
 
 print(radio.sendMessage(msg, otherID))
+
+while(True):
+  print(radio.receiveMessage(10))

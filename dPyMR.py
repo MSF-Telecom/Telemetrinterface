@@ -50,6 +50,7 @@ class Transceiver :
     while not (byteread==self.eol): #While we haven't received eol
       byteread = self.dPyMRserial.read() #Read one byte, stuff it in a temp variable
       response += byteread #Add it to the read string
+    self.dPyMRserial.flush()
 
     if '"' + message + '",ACK,OK' in str(response.decode('utf-8')) :
       self.setChannel(self.DEFCH)
@@ -91,7 +92,10 @@ class Transceiver :
     while not (byteread==self.eol):
       byteread = self.dPyMRserial.read()
       response += byteread
-    currentChannel = int(response.decode('utf-8').split(',')[3][:-1])
+
+    self.dPyMRserial.flush()
+
+    currentChannel = int(response.decode('utf-8').split(',')[-1][:-1])
     if resetDefault :
       self.DEFCH = currentChannel
     return currentChannel

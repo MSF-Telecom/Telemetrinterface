@@ -21,3 +21,7 @@
 ### Press UI key
 
 ```*SET,UI,KEY,P3```
+
+### Send status number
+
+```*SET,DPMR,TXSTAT,IND,0000002,0000001,1,ACK```

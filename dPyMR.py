@@ -64,6 +64,8 @@ class Transceiver :
     self.setChannel(self.MSGCH, resetDefault = True)
 
     command = '*SET,DPMR,TXMSG,IND,{},{},MSG,"{}",ACK'.format(str(otherID).zfill(7), str(self.ownID).zfill(7), message)
+    if verbose :
+      print("-> " + command)
     self.sendCommand(command)
     
     beginTime = time.time()
@@ -87,6 +89,41 @@ class Transceiver :
     else :
       self.setChannel(self.DEFCH)
       return 'UNKNOWN_ERROR'
+
+  def sendStatus(self, status, otherID, timeout = 10, verbose = False):
+    """
+    Parameters :
+    • status [int] : The status to send to the radio
+    Returns :
+    • Nothing
+    """
+    
+    self.setChannel(self.MSGCH, resetDefault = True)
+
+    # *SET,DPMR,TXSTAT,IND,0001107,0001748,1,ACK
+    command = '*SET,DPMR,TXSTAT,IND,{},{},{},ACK'.format(str(otherID).zfill(7), str(self.ownID).zfill(7), status)
+    if verbose :
+      print("-> " + command)
+    self.sendCommand(command)
+
+    response = ''
+    while '*NTF,DPMR,TXSTAT,IND,' not in response :
+      response = self.receiveCommand(timeout)
+      if verbose :
+        print(response)
+      if response == 'TIMEOUT_ERROR' :
+        return response
+    
+    if '"' + str(status) + '",ACK,OK' in response :
+      self.setChannel(self.DEFCH)
+      return 'ACK_OK'
+    elif '"' + str(status) + '",ACK,NG' in response :
+      self.setChannel(self.DEFCH)
+      return 'ACK_NG'
+    else :
+      self.setChannel(self.DEFCH)
+      return 'UNKNOWN_ERROR'
+
 
   def receiveCommand(self, timeout = 2):
     """

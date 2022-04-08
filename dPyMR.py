@@ -95,7 +95,11 @@ class Transceiver :
     Parameters :
     • status [int] : The status to send to the radio
     Returns :
-    • Nothing
+    • ACK [string] : The response of the radio :
+      ACK_OK if the status was sent,
+      ACK_NG if the status was not sent,
+      TIMEOUT_ERROR if the timeout was reached,
+      UNKNOWN_ERROR if an unknown error occured
     """
     
     self.setChannel(self.MSGCH, resetDefault = True)
@@ -123,7 +127,6 @@ class Transceiver :
     else :
       self.setChannel(self.DEFCH)
       return 'UNKNOWN_ERROR'
-
 
   def receiveCommand(self, timeout = 2):
     """

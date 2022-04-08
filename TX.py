@@ -2,7 +2,7 @@ import serial
 import dPyMR
 import time
 
-radioSerial = serial.Serial('/dev/tty.usbserial-145230', 4800, timeout = 2)
+radioSerial = serial.Serial('/dev/tty.usbserial-145230', 9600, timeout = 2)
 
 ownID = 1107
 otherID = 1748
@@ -17,4 +17,4 @@ while msgSent == False:
   time.sleep(2)
 
 while(True):
-  print(radio.receiveCommand(10))
+  print('<- {}'.format(radio.receiveCommand(10)))

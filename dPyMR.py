@@ -67,18 +67,14 @@ class Transceiver :
     if verbose :
       print("-> " + command)
     self.sendCommand(command)
-    
-    beginTime = time.time()
 
     response = ''
     while not '*NTF,DPMR,TXMSG,IND,' in response :
-      if(time.time() - beginTime > timeout):
-        if not '*NTF,DPMR,TXMSG,IND,' in response :
-          self.setChannel(self.DEFCH)
-          return 'TIMEOUT_ERROR'
       response = self.receiveCommand(timeout)
       if verbose :
         print(response)
+      if response == 'TIMEOUT_ERROR' :
+        return response
 
     if '"' + message + '",ACK,OK' in response :
       self.setChannel(self.DEFCH)

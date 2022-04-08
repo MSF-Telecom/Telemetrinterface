@@ -1,5 +1,6 @@
 import serial
 import dPyMR
+import time
 
 radioSerial = serial.Serial('/dev/tty.usbserial-145230', 4800, timeout = 2)
 
@@ -9,7 +10,11 @@ msg = 'This is a test ! :D'
 
 radio = dPyMR.Transceiver(radioSerial, ownID)
 
-print(radio.sendMessage(msg, otherID, verbose = True))
+msgSent = False
+while msgSent == False:
+  if radio.sendMessage(msg, otherID, verbose = True) == 'ACK_OK':
+    msgSent = True
+  time.sleep(2)
 
 while(True):
   print(radio.receiveCommand(10))

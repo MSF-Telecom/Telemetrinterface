@@ -75,6 +75,7 @@ class Transceiver :
       if response == 'TIMEOUT_ERROR' :
         if verbose :
           print(response)
+        self.setChannel(self.DEFCH)
         return response
       if verbose :
         print('<- {}'.format(response))
@@ -115,9 +116,13 @@ class Transceiver :
       if response == 'TIMEOUT_ERROR' :
         if verbose :
           print(response)
+        self.setChannel(self.DEFCH)
         return response
       if verbose :
         print('<- {}'.format(response))
+      if 'NG' in response :
+        self.setChannel(self.DEFCH)
+        return 'STAT_NG'
     
     if '' + str(status) + ',ACK,OK' in response :
       self.setChannel(self.DEFCH)
@@ -142,6 +147,7 @@ class Transceiver :
     beginTime = time.time()
     while not (byteread==self.eol):
       if(time.time() - beginTime > timeout):
+        
         return 'TIMEOUT_ERROR'
       byteread = self.dPyMRserial.read()
       response += byteread

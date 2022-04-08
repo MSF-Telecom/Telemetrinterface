@@ -15,6 +15,7 @@ print(radio.sendStatus(1, otherID, verbose = True))
 msgSent = False
 while msgSent == False:
   if radio.sendMessage(msg, otherID, verbose = True) == 'ACK_OK':
+    print('ACK_OK')
     msgSent = True
   time.sleep(2)
 

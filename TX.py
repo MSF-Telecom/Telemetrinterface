@@ -10,6 +10,8 @@ msg = 'This is a test ! :D'
 
 radio = dPyMR.Transceiver(radioSerial, ownID)
 
+print(radio.sendStatus(1, otherID, verbose = True))
+
 msgSent = False
 while msgSent == False:
   if radio.sendMessage(msg, otherID, verbose = True) == 'ACK_OK':

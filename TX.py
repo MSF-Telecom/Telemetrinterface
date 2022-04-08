@@ -9,7 +9,7 @@ msg = 'This is a test ! :D'
 
 radio = dPyMR.Transceiver(radioSerial, ownID)
 
-print(radio.sendMessage(msg, otherID))
+print(radio.sendMessage(msg, otherID, verbose = True))
 
 while(True):
   print(radio.receiveCommand(10))

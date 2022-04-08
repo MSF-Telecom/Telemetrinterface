@@ -31,7 +31,7 @@ class Transceiver :
     data = self.bol + command.encode("utf-8") + self.eol
     self.dPyMRserial.write(data)
 
-  def sendMessage(self, message, otherID, timeout = 10):
+  def sendMessage(self, message, otherID, timeout = 10, verbose = False):
     self.setChannel(self.MSGCH, resetDefault = True)
 
     command = '*SET,DPMR,TXMSG,IND,{},{},MSG,"{}",ACK'.format(str(otherID).zfill(7), str(self.ownID).zfill(7), message)
@@ -46,6 +46,8 @@ class Transceiver :
           self.setChannel(self.DEFCH)
           return 'TIMEOUT_ERROR'
       response = self.receiveCommand(timeout)
+      if verbose :
+        print(response)
 
     if '"' + message + '",ACK,OK' in response :
       self.setChannel(self.DEFCH)
@@ -73,13 +75,15 @@ class Transceiver :
 
     return response.decode('utf-8')[1:-1]
 
-  def receiveMessage(self, timeout = 2):
+  def receiveMessage(self, timeout = 2, verbose = False):
     # TODO : Verify & test function
     response = ''
     
     beginTime = time.time()
     while not '*NTF,DPMR,RXMSG,IND,' in response :
       response = self.receiveCommand(timeout)
+      if verbose :
+        print(response)
       if(response == 'TIMEOUT_ERROR'):
         return (None, None, response)
 

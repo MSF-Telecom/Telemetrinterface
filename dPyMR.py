@@ -154,20 +154,11 @@ class Transceiver :
     """
     command = '*GET,MCH,SEL'
     self.sendCommand(command)
-    response = b''
-    byteread = b''
-    beginTime = time.time()
-    while not '*NTF,MCH,SEL,' in str(response.decode('utf-8')) :
-      if(time.time() - beginTime > self.timeout):
-        if(response == b''):
-          return 'TIMEOUT_ERROR'
-      byteread = self.dPyMRserial.read()
-      response += byteread
-    while not (byteread==self.eol):
-      byteread = self.dPyMRserial.read()
-      response += byteread
-
-    self.dPyMRserial.flush()
+    response = ""
+    while not '*NTF,MCH,SEL,' in response :
+      response = self.receiveCommand(self.timeout)
+      if(response == 'TIMEOUT_ERROR'):
+        return -1
 
     currentChannel = int(response.decode('utf-8').split(',')[-1][:-1])
     if resetDefault :

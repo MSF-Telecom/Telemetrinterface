@@ -20,4 +20,8 @@ while msgSent == False:
   time.sleep(2)
 
 while(True):
-  print('<- {}'.format(radio.receiveCommand(10)))
+  inCmd = radio.receiveCommand(10)
+  if inCmd == 'TIMEOUT_ERROR':
+    print('TIMEOUT_ERROR')
+  else :
+    print('<- {}'.format(inCmd))

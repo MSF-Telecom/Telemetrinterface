@@ -160,7 +160,7 @@ class Transceiver :
       if(response == 'TIMEOUT_ERROR'):
         return -1
 
-    currentChannel = int(response.decode('utf-8').split(',')[-1][:-1])
+    currentChannel = int(response.split(',')[-1])
     if resetDefault :
       self.DEFCH = currentChannel
     return currentChannel

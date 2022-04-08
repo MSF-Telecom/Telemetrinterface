@@ -174,3 +174,6 @@ class Transceiver :
     """
     command = '*SET,UI,TEXT,"{}"'.format(message)
     self.sendCommand(command)
+
+if __name__ == '__main__':
+  help(Transceiver)

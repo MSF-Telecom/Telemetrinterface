@@ -2,6 +2,8 @@
 
 ## Protocol info
 
+A small list of usefull commands used in the dPyMR lib.
+
 ### Send message
 
 ```*SET,DPMR,TXMSG,IND,0000002,0000001,MSG,"This is a test",ACK```

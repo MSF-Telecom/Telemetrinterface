@@ -2,7 +2,7 @@ import time
 import serial
 
 class Transceiver :
-  def __init__(self, dPyMRserial, ownID, MSGCH = -1, DEFCH = -1, timeout = 2):
+  def __init__(self, dPyMRserial, ownID, MSGCH = -1, DEFCH = -1, timeout = 2, verbose = False):
     """
     Parameters :
     • dPyMRserial [serial] : The serial object of the transceiver
@@ -15,6 +15,7 @@ class Transceiver :
     self.ownID = ownID
     self.timeout = timeout
     self.ownID = ownID
+    self.verbose = verbose
 
     self.bol = b'\x02'
     self.eol = b'\x03'
@@ -65,16 +66,18 @@ class Transceiver :
 
     command = '*SET,DPMR,TXMSG,IND,{},{},MSG,"{}",ACK'.format(str(otherID).zfill(7), str(self.ownID).zfill(7), message)
     if verbose :
-      print("-> " + command)
+      print('-> {}'.format(command))
     self.sendCommand(command)
 
     response = ''
     while not '*NTF,DPMR,TXMSG,IND,' in response :
       response = self.receiveCommand(timeout)
-      if verbose :
-        print(response)
       if response == 'TIMEOUT_ERROR' :
+        if verbose :
+          print(response)
         return response
+      if verbose :
+        print('<- {}'.format(response))
 
     if '"' + message + '",ACK,OK' in response :
       self.setChannel(self.DEFCH)
@@ -101,23 +104,25 @@ class Transceiver :
     self.setChannel(self.MSGCH, resetDefault = True)
 
     # *SET,DPMR,TXSTAT,IND,0001107,0001748,1,ACK
-    command = '*SET,DPMR,TXSTAT,IND,{},{},{},ACK'.format(str(otherID).zfill(7), str(self.ownID).zfill(7), status)
+    command = '*SET,DPMR,TXSTAT,IND,{},{},{},ACK'.format(str(otherID).zfill(7), str(self.ownID).zfill(7), str(status))
     if verbose :
-      print("-> " + command)
+      print('-> {}'.format(command))
     self.sendCommand(command)
 
     response = ''
     while '*NTF,DPMR,TXSTAT,IND,' not in response :
       response = self.receiveCommand(timeout)
-      if verbose :
-        print(response)
       if response == 'TIMEOUT_ERROR' :
+        if verbose :
+          print(response)
         return response
+      if verbose :
+        print('<- {}'.format(response))
     
-    if '"' + str(status) + '",ACK,OK' in response :
+    if '' + str(status) + ',ACK,OK' in response :
       self.setChannel(self.DEFCH)
       return 'ACK_OK'
-    elif '"' + str(status) + '",ACK,NG' in response :
+    elif '' + str(status) + ',ACK,NG' in response :
       self.setChannel(self.DEFCH)
       return 'ACK_NG'
     else :
@@ -135,7 +140,6 @@ class Transceiver :
     response = b''
     byteread = b''
     beginTime = time.time()
-    self.dPyMRserial.flush()
     while not (byteread==self.eol):
       if(time.time() - beginTime > timeout):
         return 'TIMEOUT_ERROR'
@@ -160,14 +164,17 @@ class Transceiver :
     beginTime = time.time()
     while not '*NTF,DPMR,RXMSG,IND,' in response :
       response = self.receiveCommand(timeout)
-      if verbose :
-        print(response)
-      if(response == 'TIMEOUT_ERROR'):
+      if response == 'TIMEOUT_ERROR' :
+        if verbose :
+          print(response)
         return (None, None, response)
+      if verbose :
+        print('<- {}'.format(response))
+        
 
     return (int(response.split(',')[-5]), int(response.split(',')[-3]), response.split(',')[-1][1:-1])
 
-  def setChannel(self, channel, resetDefault = False):
+  def setChannel(self, channel, resetDefault = False, verbose = False):
     """
     Parameters :
     • channel [int] : The channel to set
@@ -180,6 +187,20 @@ class Transceiver :
     
     command = '*SET,MCH,SEL,{}'.format(str(channel))
     self.sendCommand(command)
+
+    response = ''
+    while not '*NTF,MCH,SEL,' in response :
+      response = self.receiveCommand()
+      if response == 'TIMEOUT_ERROR' :
+        if verbose :
+          print(response)
+        return response
+      if verbose :
+        print('<- {}'.format(response))
+    if '*NTF,MCH,SEL,{}'.format(channel) in response :
+      return 'OK'
+    else :
+      return 'NG'
 
   def getChannel(self, resetDefault = False):
     """

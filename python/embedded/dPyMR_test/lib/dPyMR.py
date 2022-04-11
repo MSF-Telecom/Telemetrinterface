@@ -72,7 +72,7 @@ class Transceiver :
     response = ''
     while not '*NTF,DPMR,TXMSG,IND,' in response :
       response = self.receiveCommand(timeout)
-      if response == 'TIMEOUT_ERROR' :
+      if response == 'TIMEOUT_ERROR' or response == 'CMD_UNICODE_ERROR' :
         if verbose :
           print(response)
         self.setChannel(self.DEFCH)
@@ -113,7 +113,7 @@ class Transceiver :
     response = ''
     while '*NTF,DPMR,TXSTAT,IND,' not in response :
       response = self.receiveCommand(timeout)
-      if response == 'TIMEOUT_ERROR' :
+      if response == 'TIMEOUT_ERROR' or response == 'CMD_UNICODE_ERROR' :
         if verbose :
           print(response)
         self.setChannel(self.DEFCH)
@@ -153,8 +153,11 @@ class Transceiver :
       response += byteread
 
     #self.dPyMRserial.flush()
-
-    return response.decode('utf-8')[1:-1]
+    try :
+      command = response.decode("utf-8")[1:-1]
+    except UnicodeDecodeError :
+      command = 'CMD_UNICODE_ERROR'
+    return command
 
   def receiveMessage(self, timeout = 2, verbose = False):
     """
@@ -170,7 +173,7 @@ class Transceiver :
     beginTime = time.time()
     while not '*NTF,DPMR,RXMSG,IND,' in response :
       response = self.receiveCommand(timeout)
-      if response == 'TIMEOUT_ERROR' :
+      if response == 'TIMEOUT_ERROR' or response == 'CMD_UNICODE_ERROR' :
         if verbose :
           print(response)
         return (None, None, response)
@@ -197,7 +200,7 @@ class Transceiver :
     response = ''
     while not '*NTF,MCH,SEL,' in response :
       response = self.receiveCommand()
-      if response == 'TIMEOUT_ERROR' :
+      if response == 'TIMEOUT_ERROR' or response == 'CMD_UNICODE_ERROR' :
         if verbose :
           print(response)
         return response
@@ -220,7 +223,7 @@ class Transceiver :
     response = ""
     while not '*NTF,MCH,SEL,' in response :
       response = self.receiveCommand(self.timeout)
-      if(response == 'TIMEOUT_ERROR'):
+      if(response == 'TIMEOUT_ERROR' or response == 'CMD_UNICODE_ERROR'):
         return -1
 
     currentChannel = int(response.split(',')[-1])

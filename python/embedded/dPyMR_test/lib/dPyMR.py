@@ -1,5 +1,4 @@
 import time
-import busio
 
 class Transceiver :
   def __init__(self, dPyMRserial, ownID, MSGCH = -1, DEFCH = -1, timeout = 2, verbose = False):

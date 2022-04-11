@@ -14,7 +14,7 @@ radio = dPyMR.Transceiver(uart, ownID)
 while True:
   msgSent = False
   while msgSent == False:
-    if radio.sendMessage(msg, otherID) == 'ACK_OK':
+    if radio.sendMessage(msg, otherID, verbose=True) == 'ACK_OK':
       print('ACK_OK')
       msgSent = True
     time.sleep(2)

@@ -1,5 +1,4 @@
 import time
-import serial
 
 class Transceiver :
   def __init__(self, dPyMRserial, ownID, MSGCH = -1, DEFCH = -1, timeout = 2, verbose = False):
@@ -64,7 +63,7 @@ class Transceiver :
     """
     self.setChannel(self.MSGCH, resetDefault = True)
 
-    command = '*SET,DPMR,TXMSG,IND,{},{},MSG,"{}",ACK'.format(str(otherID).zfill(7), str(self.ownID).zfill(7), message)
+    command = '*SET,DPMR,TXMSG,IND,{},{},MSG,"{}",ACK'.format(self.zfill(str(otherID), 7), self.zfill(str(self.ownID), 7), message)
     if verbose :
       print('-> {}'.format(command))
     self.sendCommand(command)
@@ -105,7 +104,7 @@ class Transceiver :
     self.setChannel(self.MSGCH, resetDefault = True)
 
     # *SET,DPMR,TXSTAT,IND,0001107,0001748,1,ACK
-    command = '*SET,DPMR,TXSTAT,IND,{},{},{},ACK'.format(str(otherID).zfill(7), str(self.ownID).zfill(7), str(status))
+    command = '*SET,DPMR,TXSTAT,IND,{},{},{},ACK'.format(self.zfill(str(otherID), 7), self.zfill(str(self.ownID), 7), str(status))
     if verbose :
       print('-> {}'.format(command))
     self.sendCommand(command)
@@ -149,10 +148,10 @@ class Transceiver :
       if(time.time() - beginTime > timeout):
         
         return 'TIMEOUT_ERROR'
-      byteread = self.dPyMRserial.read()
+      byteread = self.dPyMRserial.read(1)
       response += byteread
 
-    self.dPyMRserial.flush()
+    #self.dPyMRserial.flush()
 
     return response.decode('utf-8')[1:-1]
 
@@ -237,6 +236,16 @@ class Transceiver :
     """
     command = '*SET,UI,TEXT,"{}"'.format(message)
     self.sendCommand(command)
+  
+  def zfill(self, string, length):
+    """
+    Parameters :
+    • string [string] : The string to fill
+    • length [int] : The length of the string to fill
+    Returns :
+    • string [string] : The filled string
+    """
+    return '{:0>{l}}'.format(string, l=length)
 
 if __name__ == '__main__':
   help(Transceiver)

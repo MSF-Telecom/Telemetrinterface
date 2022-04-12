@@ -146,15 +146,17 @@ class Transceiver :
     beginTime = time.time()
     while not (byteread==self.eol):
       if(time.time() - beginTime > timeout):
-        
         return 'TIMEOUT_ERROR'
       byteread = self.dPyMRserial.read(1)
-      response += byteread
+      try :
+        response += byteread
+      except :
+        response = response
 
     #self.dPyMRserial.flush()
     try :
       command = response.decode("utf-8")[1:-1]
-    except UnicodeDecodeError :
+    except :
       command = 'CMD_UNICODE_ERROR'
     return command
 

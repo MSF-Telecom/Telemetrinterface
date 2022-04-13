@@ -10,13 +10,18 @@
   * **1.V rail** :
     * *Internal to RP2040 (no need for external regulator)*
   * Indicator lights and test pads on all voltage rails (except for 1.1V rail)
+* **USB** :
+  * Mini-USB connector
+    * More robust, available
+  * RP2040 aware of plugin-state
+  * 5V Rail aware of plugin-state (Rail prefers VSUP if available)
 * **Internal periferals** :
-  * **Integrated LEDs** :
+  * **Integrated LEDs** : 3
     * Independent or RGB ?
     * **Pins** :
       * GP25 (default ```board.LED``` pin on Pi Pico)
-      * GP24
-      * GP23
+      * TBD
+      * TBD
   * **Integrated Sensors** :
     * **BME280** (I2C or SPI) :
       * Pressure : 300hPa to 1100hPa, ±1.0hPa abs, ±0.12 rel

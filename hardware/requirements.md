@@ -15,6 +15,7 @@
     * More robust, available
   * RP2040 aware of plugin-state
   * 5V Rail aware of plugin-state (Rail prefers VSUP if available)
+  * Jumper for USB_HOST powering
 * **Internal periferals** :
   * **Integrated LEDs** : 3
     * Independent or RGB ?

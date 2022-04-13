@@ -64,5 +64,5 @@
     * Buffered ?
   * **CAN** :
     * MCP2515 Controller (SPI interface; need to verify CircuitPythn lib availability)
-    * TJA1043 Transceiver (need to verify compatibility with OBD port specs, and MCP2515)
+    * MCP2551 Transceiver (need to verify compatibility with OBD port specs)
     * Protected (need to find CAN protection specs)

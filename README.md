@@ -1,8 +1,10 @@
-# dPMR SerControl Reverse-engineering
+# Telemetrinterface
 
-## Protocol info
+[![Code Checkout](https://github.com/fred-corp/MSF_ICOM-Telemetrinterface/actions/workflows/checkout.yml/badge.svg)](https://github.com/fred-corp/MSF_ICOM-Telemetrinterface/actions/workflows/checkout.yml)
 
-A small list of usefull commands used in the dPyMR lib.
+## ICOM PC-CMD v2 Protocol info
+
+A small list of usefull commands used in the dPyMR lib., reverse-engineered from IP2Air and an ICOM IC-F5061D radio.
 
 ### Send message
 

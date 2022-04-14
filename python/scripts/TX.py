@@ -1,5 +1,7 @@
+import sys
+sys.path.append('../')
 import serial
-import dPyMR
+import lib.dPyMR as dPyMR
 import time
 
 radioSerial = serial.Serial('/dev/tty.usbserial-145230', 9600, timeout = 2)

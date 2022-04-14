@@ -48,6 +48,7 @@
       * 10MOhm input impedance
       * Resistor divider : 0-50V to 0-3.3V
       * Uses RP2040's internal ADC
+      * Jumper for ADC3 to sense VSUP
   * **RS232/UART interface** :
     * RS232 and UARD port may need to be shared; this will be updated when the hardware is being designed.
     * **RS232** :

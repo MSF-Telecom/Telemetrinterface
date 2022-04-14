@@ -133,7 +133,7 @@ class Transceiver :
       self.setChannel(self.DEFCH)
       return 'UNKNOWN_ERROR'
 
-  def receiveCommand(self, timeout = 2):
+  def receiveCommand(self, timeout = 2, verbose = False):
     """
     Parameters :
     • timeout [int] : The timeout in seconds
@@ -158,6 +158,8 @@ class Transceiver :
       command = response.decode("utf-8")[1:-1]
     except :
       command = 'CMD_UNICODE_ERROR'
+    if verbose :
+      print(command)
     return command
 
   def receiveMessage(self, timeout = 2, verbose = False):

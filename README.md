@@ -1,6 +1,6 @@
 # Telemetrinterface
 
-[![Code Checkout](https://github.com/fred-corp/MSF_ICOM-Telemetrinterface/actions/workflows/checkout.yml/badge.svg)](https://github.com/fred-corp/MSF_ICOM-Telemetrinterface/actions/workflows/checkout.yml)
+[![Code Checkout](https://github.com/fred-corp/MSF_ICOM-Telemetrinterface/workflows/Code%20Checkout/badge.svg)](https://github.com/fred-corp/MSF_ICOM-Telemetrinterface/actions/workflows/checkout.yml)
 
 ## ICOM PC-CMD v2 Protocol info
 

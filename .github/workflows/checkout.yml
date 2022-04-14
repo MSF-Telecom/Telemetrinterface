@@ -1,0 +1,11 @@
+name: Code Checkout
+
+on: push
+
+jobs:
+  checkout:
+    name: Checkout Code base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2

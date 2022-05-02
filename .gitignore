@@ -3,3 +3,4 @@ private
 __pycache__
 .vscode
 .pytest_cache
+node_modules

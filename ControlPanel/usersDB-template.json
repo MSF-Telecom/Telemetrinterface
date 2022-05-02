@@ -1,0 +1,7 @@
+{
+    "user": {
+        "active": true,
+        "passwordSHA256": "",
+        "privileges": 1
+    }
+}

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const mainSiteController = require('./controllers/mainSiteController')
 const userController = require('./controllers/userController')
 const loginController = require('./controllers/loginController')
+const panelController = require('./controllers/panelController')
 const router = express.Router()
 
 router.use(bodyParser.urlencoded({ extended: true }))
@@ -28,6 +29,10 @@ router.get('/user', userController.userPage)
 router.get('/user/psswd', userController.userNewPasswordGET)
 
 router.post('/user/psswd', userController.userNewPasswordPOST)
+
+router.get('/control', panelController.controlPage)
+
+router.post('/control/IO/Out', panelController.OIOut)
 
 router.get('/get',function(req, res){
   res.send(req.session)

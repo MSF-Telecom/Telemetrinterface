@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Telemetrinterface Control Panel</title>
+    <meta name="Telemetrinterface Control Panel" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+  </head>
+  <body>
+    <h1>Telemetrinterface</h1>
+    <h3>Inputs</h3>
+    <h4>Environmental : </h4>
+    Temperature : <%= data.temp %> <br>
+    Humidity : <%= data.hum %> <br>
+    Pressure : <%= data.press %> <br>
+
+    <h4>I/O In : </h4>
+    IN_1 : <%= data.in1 %> <br>
+    IN_2 : <%= data.in2 %> <br>
+    IN_3 : <%= data.in3 %> <br>
+    IN_4 : <%= data.in4 %> <br>
+
+    <h4>Analog : </h4>
+    SENSE_IN1 : <%= data.ain1 %> <br>
+    SENSE_IN2 : <%= data.ain2 %> <br>
+    SENSE_IN3 : <%= data.ain3 %> <br>
+    VSUP : <%= data.ain4 %> <br>
+    
+    <h3>Outputs</h3>
+    <h4>Outputs : </h4>
+    <form action="/control/IO/Out" method="post">
+      <label for="OUT1">OUT1:</label>
+      <input type="checkbox" name="OUT1" id="OUT1" <% if(data.out1) { %> checked <% } %> > <br>
+      <label for="OUT2">OUT2:</label>
+      <input type="checkbox" name="OUT2" id="OUT2" <% if(data.out2) { %> checked <% } %> > <br>
+      <label for="OUT3">OUT3:</label>
+      <input type="checkbox" name="OUT3" id="OUT3" <% if(data.out3) { %> checked <% } %> > <br>
+      <label for="OUT4">OUT4:</label>
+      <input type="checkbox" name="OUT4" id="OUT4" <% if(data.out4) { %> checked <% } %> > <br>
+      <input type="submit" value="Update"></form>
+    <ul>
+      <li><a href="/">Home</a></li>
+    </ul>
+    <script src="" async defer></script>
+  </body>
+</html>

@@ -8,5 +8,10 @@
         "passwordSHA256": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
         "active": true,
         "privileges": 1
+    },
+    "Mano": {
+        "passwordSHA256": "f2d81a260dea8a100dd517984e53c56a7523d96942a834b9cdc249bd4e8c7aa9",
+        "active": true,
+        "privileges": 1
     }
 }

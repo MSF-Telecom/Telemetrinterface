@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mainSiteController = require('./controllers/mainSiteController')
 const userController = require('./controllers/userController')
+const loginController = require('./controllers/loginController')
 const router = express.Router()
 
 router.use(bodyParser.urlencoded({ extended: true }))
@@ -12,15 +13,15 @@ router.get('/home', mainSiteController.homePage)
 
 router.get('/about', mainSiteController.about)
 
-router.get('/login', mainSiteController.loginGET)
+router.get('/login', loginController.loginGET)
 
-router.post('/login', mainSiteController.loginPOST)
+router.post('/login', loginController.loginPOST)
 
-router.get('/register', mainSiteController.registerGET)
+router.get('/register', loginController.registerGET)
 
-router.post('/register', mainSiteController.registerPOST)
+router.post('/register', loginController.registerPOST)
 
-router.get('/logout', mainSiteController.logout)
+router.get('/logout', loginController.logout)
 
 router.get('/user', userController.userPage)
 

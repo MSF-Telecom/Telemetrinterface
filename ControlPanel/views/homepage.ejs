@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Telemetrinterface Control Panel</title>
+    <meta name="Telemetrinterface Control Panel" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+  </head>
+  <body>
+    <h1>Hello there !</h1>
+    <p>
+      This is the control panel for the Telemetrinterface.
+    </p>
+    <p>
+      You can use this page to control the system.
+    </p>
+    <ul>
+      <li><a href="/about">About</a></li>
+    <% if (typeof user === 'undefined') { %> 
+      <li><a href="/login">Login</a></li>
+      <li><a href="/register">Register</a></li>
+    <% } else { %> 
+      <li><a href="/control">Control</a></li>
+    <% } %>
+    </ul>
+    <script src="" async defer></script>
+  </body>
+</html>

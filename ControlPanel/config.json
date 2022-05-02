@@ -1,0 +1,11 @@
+{
+  "status": {
+    "homepage": "live",
+    "about": "maintenance",
+    "login": "live",
+    "register": "live",
+    "logout": "live",
+    "user": "live",
+    "userNewPassword": "live"
+  }
+}

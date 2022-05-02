@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Telemetrinterface Control Panel</title>
+    <meta name="Telemetrinterface Control Panel" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+  </head>
+  <body>
+    <h1>Log In</h1>
+    <h3>Please enter your username and password</h3>
+    <form action="/login" method="post">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username">
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password">
+      <input type="submit" value="Log In"></form>
+    <p style="color: red;"><%= login_message %> </p>
+    <script src="" async defer></script>
+  </body>
+</html>

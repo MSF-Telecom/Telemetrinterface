@@ -28,6 +28,7 @@
     VSUP      : <span class="vsup"></span> VDC <br>
     
     <h3>Outputs</h3>
+
     <h4>Outputs : </h4>
     <form >
       <label for="OUT1">OUT1 : </label>
@@ -44,6 +45,7 @@
       <label for="OUT4" id="OUT4_Stat"></label><br>
     </form>
     <button onclick="updateOutputs()">Update</button>
+
     <h4>Buzzer : </h4>
     <form>
       <label for="buzzTime">Buzzer : </label>
@@ -51,6 +53,79 @@
       <label for="buzzTime" id="buzzer_Stat"></label><br>
     </form>
     <button onclick="updateBuzzer()">Sound</button>
+
+    <h3>LEDs : </h3>
+
+    <h4>LED 1 : </h4>
+    <form>
+      <label for="R1">R : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="R1" name="R1">
+      <label for="R1" id="R1_Stat"></label><br>
+      <label for="G1">G : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="G1" name="G1">
+      <label for="G1" id="G1_Stat"></label><br>
+      <label for="B1">B : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="B1" name="B1">
+      <label for="B1" id="B1_Stat"></label><br>
+    </form>
+    <button onclick="updateLED(1)">Update</button>
+
+    <h4>LED 2 : </h4>
+    <form>
+      <label for="R2">R : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="R2" name="R2">
+      <label for="R2" id="R2_Stat"></label><br>
+      <label for="G2">G : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="G2" name="G2">
+      <label for="G2" id="G2_Stat"></label><br>
+      <label for="B2">B : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="B2" name="B2">
+      <label for="B2" id="B2_Stat"></label><br>
+    </form>
+    <button onclick="updateLED(2)">Update</button>
+
+    <h4>LED 3 : </h4>
+    <form>
+      <label for="R3">R : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="R3" name="R3">
+      <label for="R3" id="R3_Stat"></label><br>
+      <label for="G3">G : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="G3" name="G3">
+      <label for="G3" id="G3_Stat"></label><br>
+      <label for="B3">B : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="B3" name="B3">
+      <label for="B3" id="B3_Stat"></label><br>
+    </form>
+    <button onclick="updateLED(3)">Update</button>
+
+    <h4>LED 4 : </h4>
+    <form>
+      <label for="R4">R : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="R4" name="R4">
+      <label for="R4" id="R4_Stat"></label><br>
+      <label for="G4">G : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="G4" name="G4">
+      <label for="G4" id="G4_Stat"></label><br>
+      <label for="B4">B : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="B4" name="B4">
+      <label for="B4" id="B4_Stat"></label><br>
+    </form>
+    <button onclick="updateLED(4)">Update</button>
+
+    <h4>LED 5 : </h4>
+    <form>
+      <label for="R5">R : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="R5" name="R5">
+      <label for="R5" id="R5_Stat"></label><br>
+      <label for="G5">G : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="G5" name="G5">
+      <label for="G5" id="G5_Stat"></label><br>
+      <label for="B5">B : </label>
+      <input type="range" min="0" max="255" value="0" class="slider" id="B5" name="B5">
+      <label for="B5" id="B5_Stat"></label><br>
+    </form>
+    <button onclick="updateLED(5)">Update</button>
+
     <ul>
       <li><a href="/">Home</a></li>
     </ul>

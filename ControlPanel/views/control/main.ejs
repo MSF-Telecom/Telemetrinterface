@@ -68,6 +68,7 @@
       <input type="range" min="0" max="255" value="0" class="slider" id="B1" name="B1">
       <label for="B1" id="B1_Stat"></label><br>
     </form>
+    <span style="font-size:50px" id="led1Color">&#x25C9;</span>
     <button onclick="updateLED(1)">Update</button>
 
     <h4>LED 2 : </h4>
@@ -82,6 +83,7 @@
       <input type="range" min="0" max="255" value="0" class="slider" id="B2" name="B2">
       <label for="B2" id="B2_Stat"></label><br>
     </form>
+    <span style="font-size:50px" id="led2Color">&#x25C9;</span>
     <button onclick="updateLED(2)">Update</button>
 
     <h4>LED 3 : </h4>
@@ -96,6 +98,7 @@
       <input type="range" min="0" max="255" value="0" class="slider" id="B3" name="B3">
       <label for="B3" id="B3_Stat"></label><br>
     </form>
+    <span style="font-size:50px" id="led3Color">&#x25C9;</span>
     <button onclick="updateLED(3)">Update</button>
 
     <h4>LED 4 : </h4>
@@ -110,6 +113,7 @@
       <input type="range" min="0" max="255" value="0" class="slider" id="B4" name="B4">
       <label for="B4" id="B4_Stat"></label><br>
     </form>
+    <span style="font-size:50px" id="led4Color">&#x25C9;</span>
     <button onclick="updateLED(4)">Update</button>
 
     <h4>LED 5 : </h4>
@@ -124,6 +128,7 @@
       <input type="range" min="0" max="255" value="0" class="slider" id="B5" name="B5">
       <label for="B5" id="B5_Stat"></label><br>
     </form>
+    <span style="font-size:50px" id="led5Color">&#x25C9;</span>
     <button onclick="updateLED(5)">Update</button>
 
     <ul>
@@ -208,18 +213,21 @@
       R1_Stat.innerHTML = Rs1.value
       Rs1.oninput = function() {
         R1_Stat.innerHTML = this.value
+        updateLEDs(1)
       }
       var Gs1 = document.getElementById("G1")
       var G1_Stat = document.getElementById("G1_Stat")
       G1_Stat.innerHTML = Gs1.value
       Gs1.oninput = function() {
         G1_Stat.innerHTML = this.value
+        updateLEDs(1)
       }
       var Bs1 = document.getElementById("B1")
       var B1_Stat = document.getElementById("B1_Stat")
       B1_Stat.innerHTML = Bs1.value
       Bs1.oninput = function() {
         B1_Stat.innerHTML = this.value
+        updateLEDs(1)
       }
 
       var Rs2 = document.getElementById("R2")
@@ -227,18 +235,21 @@
       R2_Stat.innerHTML = Rs2.value
       Rs2.oninput = function() {
         R2_Stat.innerHTML = this.value
+        updateLEDs(2)
       }
       var Gs2 = document.getElementById("G2")
       var G2_Stat = document.getElementById("G2_Stat")
       G2_Stat.innerHTML = Gs2.value
       Gs2.oninput = function() {
         G2_Stat.innerHTML = this.value
+        updateLEDs(2)
       }
       var Bs2 = document.getElementById("B2")
       var B2_Stat = document.getElementById("B2_Stat")
       B2_Stat.innerHTML = Bs2.value
       Bs2.oninput = function() {
         B2_Stat.innerHTML = this.value
+        updateLEDs(2)
       }
 
       var Rs3 = document.getElementById("R3")
@@ -246,18 +257,21 @@
       R3_Stat.innerHTML = Rs3.value
       Rs3.oninput = function() {
         R3_Stat.innerHTML = this.value
+        updateLEDs(3)
       }
       var Gs3 = document.getElementById("G3")
       var G3_Stat = document.getElementById("G3_Stat")
       G3_Stat.innerHTML = Gs3.value
       Gs3.oninput = function() {
         G3_Stat.innerHTML = this.value
+        updateLEDs(3)
       }
       var Bs3 = document.getElementById("B3")
       var B3_Stat = document.getElementById("B3_Stat")
       B3_Stat.innerHTML = Bs3.value
       Bs3.oninput = function() {
         B3_Stat.innerHTML = this.value
+        updateLEDs(3)
       }
 
       var Rs4 = document.getElementById("R4")
@@ -265,18 +279,21 @@
       R4_Stat.innerHTML = Rs4.value
       Rs4.oninput = function() {
         R4_Stat.innerHTML = this.value
+        updateLEDs(4)
       }
       var Gs4 = document.getElementById("G4")
       var G4_Stat = document.getElementById("G4_Stat")
       G4_Stat.innerHTML = Gs4.value
       Gs4.oninput = function() {
         G4_Stat.innerHTML = this.value
+        updateLEDs(4)
       }
       var Bs4 = document.getElementById("B4")
       var B4_Stat = document.getElementById("B4_Stat")
       B4_Stat.innerHTML = Bs4.value
       Bs4.oninput = function() {
         B4_Stat.innerHTML = this.value
+        updateLEDs(4)
       }
 
       var Rs5 = document.getElementById("R5")
@@ -284,18 +301,25 @@
       R5_Stat.innerHTML = Rs5.value
       Rs5.oninput = function() {
         R5_Stat.innerHTML = this.value
+        updateLEDs(5)
       }
       var Gs5 = document.getElementById("G5")
       var G5_Stat = document.getElementById("G5_Stat")
       G5_Stat.innerHTML = Gs5.value
       Gs5.oninput = function() {
         G5_Stat.innerHTML = this.value
+        updateLEDs(5)
       }
       var Bs5 = document.getElementById("B5")
       var B5_Stat = document.getElementById("B5_Stat")
       B5_Stat.innerHTML = Bs5.value
       Bs5.oninput = function() {
         B5_Stat.innerHTML = this.value
+        updateLEDs(5)
+      }
+
+      for (var i = 1; i < 6; i++) {
+        updateLEDs(i)
       }
     }
     
@@ -312,6 +336,14 @@
       })
       .then(response => response.json())
       .then(data => updateFields(data))
+    }
+
+    function updateLEDs(led){
+      var R = document.getElementById('R'+led).value
+      var G = document.getElementById('G'+led).value
+      var B = document.getElementById('B'+led).value
+      var led_preview = document.getElementById('led'+led+'Color')
+      led_preview.style.color = 'rgb('+R+','+G+','+B+')'
     }
 
     async function updateLED(led) {

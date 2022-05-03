@@ -22,7 +22,6 @@ exports.loginPOST = function (req, res) {
     let username = req.body.username
     let password = req.body.password
     passwordSHA256 = crypto.createHash('sha256').update(password).digest('hex')
-    console.log(passwordSHA256)
     if (userDB.hasOwnProperty(username)){
       let active = userDB[username].active
       if(!active) {

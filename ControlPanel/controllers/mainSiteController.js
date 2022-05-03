@@ -3,7 +3,6 @@ const config = require('../config.json')
 
 exports.homePage = function (req, res) {
   if (config.status.homepage == 'live' || config.status.homepage == 'test') {
-    console.log(req.session.user)
     res.render('homepage.ejs', {user: req.session.user})
   } else if (config.status.homepage == 'maintenance') {
     res.render('maintenance.ejs')

@@ -1,48 +1,103 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Telemetrinterface Control Panel</title>
-    <meta name="Telemetrinterface Control Panel" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
-  </head>
-  <body>
+  <%- include('../head.ejs') -%> 
+  <body onload="getOption()">
     <h1>Telemetrinterface</h1>
+    <h3>Radio</h3>
+    <select name="radio" id="radio" onchange="getOption()">
+      <% for (let key of Object.keys(data)) { %>
+        <option value="<%= key %>"><%= key %></option>
+      <% } %> 
+    </select>
     <h3>Inputs</h3>
     <h4>Environmental : </h4>
-    Temperature : <%= data.temp %> °C<br>
-    Humidity : <%= data.hum %> %RH<br>
-    Pressure : <%= data.press %> hPa<br>
+    Temperature : <span class="temp"></span> °C<br>
+    Humidity : <span class="hum"></span> %RH<br>
+    Pressure : <span class="press"></span> hPa<br>
 
     <h4>I/O In : </h4>
-    IN_1 : <%= data.in1 %> <br>
-    IN_2 : <%= data.in2 %> <br>
-    IN_3 : <%= data.in3 %> <br>
-    IN_4 : <%= data.in4 %> <br>
+    IN_1 : <span class="in1"></span> <br>
+    IN_2 : <span class="in2"></span> <br>
+    IN_3 : <span class="in3"></span> <br>
+    IN_4 : <span class="in4"></span> <br>
 
     <h4>Analog : </h4>
-    SENSE_IN1 : <%= data.ain1 %> <br>
-    SENSE_IN2 : <%= data.ain2 %> <br>
-    SENSE_IN3 : <%= data.ain3 %> <br>
-    VSUP : <%= data.ain4 %> <br>
+    SENSE_IN1 : <span class="sense_in1"></span> VDC <br>
+    SENSE_IN2 : <span class="sense_in2"></span> VDC <br>
+    SENSE_IN3 : <span class="sense_in3"></span> VDC <br>
+    VSUP : <span class="vsup"></span> VDC <br>
     
     <h3>Outputs</h3>
     <h4>Outputs : </h4>
-    <form action="/control/IO/Out" method="post">
+    <form onsubmit="updateOutputs()">
       <label for="OUT1">OUT1:</label>
-      <input type="checkbox" name="OUT1" id="OUT1" <% if(data.out1) { %> checked <% } %> > <br>
+      <input type="checkbox" name="OUT1" id="OUT1"> 
+      <label for="OUT1" id="OUT1_Stat"></label><br>
       <label for="OUT2">OUT2:</label>
-      <input type="checkbox" name="OUT2" id="OUT2" <% if(data.out2) { %> checked <% } %> > <br>
+      <input type="checkbox" name="OUT2" id="OUT2">
+      <label for="OUT2" id="OUT2_Stat"></label><br>
       <label for="OUT3">OUT3:</label>
-      <input type="checkbox" name="OUT3" id="OUT3" <% if(data.out3) { %> checked <% } %> > <br>
+      <input type="checkbox" name="OUT3" id="OUT3">
+      <label for="OUT3" id="OUT3_Stat"></label><br>
       <label for="OUT4">OUT4:</label>
-      <input type="checkbox" name="OUT4" id="OUT4" <% if(data.out4) { %> checked <% } %> > <br>
-      <input type="submit" value="Update"></form>
+      <input type="checkbox" name="OUT4" id="OUT4">
+      <label for="OUT4" id="OUT4_Stat"></label><br>
+    </form>
+    <button onclick="updateOutputs()">Update</button>
     <ul>
       <li><a href="/">Home</a></li>
     </ul>
-    <script src="" async defer></script>
+    <script type="text/javascript">
+    async function getOption() {
+      selectElement = document.querySelector('#radio')
+      nodeID = selectElement.value
+      let data = {}
+      await fetch('/control/data')
+      .then(response => response.json())
+      .then(data => updateFields(data))
+    }
+
+    async function updateOutputs(){
+      let outputs = {}
+      await fetch('/control/IO/Out', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nodeID: nodeID,
+          out1: document.querySelector('#OUT1').checked,
+          out2: document.querySelector('#OUT2').checked,
+          out3: document.querySelector('#OUT3').checked,
+          out4: document.querySelector('#OUT4').checked
+        })
+      })
+      .then(response => response.json())
+      .then(data => updateFields(data))
+    }
+
+    function updateFields(data){
+      nodeData = data[nodeID]
+      document.querySelector('.temp').textContent = nodeData.temp
+      document.querySelector('.hum').textContent = nodeData.hum
+      document.querySelector('.press').textContent = nodeData.press
+      document.querySelector('.in1').textContent = nodeData.in1
+      document.querySelector('.in2').textContent = nodeData.in2
+      document.querySelector('.in3').textContent = nodeData.in3
+      document.querySelector('.in4').textContent = nodeData.in4
+      document.querySelector('.sense_in1').textContent = nodeData.ain1
+      document.querySelector('.sense_in2').textContent = nodeData.ain2
+      document.querySelector('.sense_in3').textContent = nodeData.ain3
+      document.querySelector('.vsup').textContent = nodeData.vsup
+      document.querySelector('#OUT1').checked = nodeData.out1
+      document.querySelector('#OUT1_Stat').innerHTML = nodeData.out1 ? 'ON' : 'OFF'
+      document.querySelector('#OUT2').checked = nodeData.out2
+      document.querySelector('#OUT2_Stat').innerHTML = nodeData.out2 ? 'ON' : 'OFF'
+      document.querySelector('#OUT3').checked = nodeData.out3
+      document.querySelector('#OUT3_Stat').innerHTML = nodeData.out3 ? 'ON' : 'OFF'
+      document.querySelector('#OUT4').checked = nodeData.out4
+      document.querySelector('#OUT4_Stat').innerHTML = nodeData.out4 ? 'ON' : 'OFF'
+    }
+    </script>
   </body>
 </html>

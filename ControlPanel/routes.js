@@ -34,6 +34,8 @@ router.get('/control', panelController.controlPage)
 
 router.post('/control/IO/Out', panelController.OIOut)
 
+router.get('/control/data', panelController.dataOut)
+
 router.get('/get',function(req, res){
   res.send(req.session)
 })

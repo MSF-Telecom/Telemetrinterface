@@ -45,12 +45,12 @@
     </form>
     <button onclick="updateOutputs()">Update</button>
     <h4>Buzzer : </h4>
-    <form onsubmit="updateBuzzer()">
+    <form>
       <label for="buzzTime">Buzzer : </label>
       <input type="range" min="100" max="5000" value="500" class="slider" id="buzzTime" name="buzzTime">
       <label for="buzzTime" id="buzzer_Stat"></label><br>
     </form>
-    <button onclick="updateOutputs()">Sound</button>
+    <button onclick="updateBuzzer()">Sound</button>
     <ul>
       <li><a href="/">Home</a></li>
     </ul>
@@ -113,6 +113,22 @@
       document.querySelector('#OUT4').checked = nodeData.out4
       document.querySelector('#OUT4_Stat').innerHTML = nodeData.out4 ? 'ON' : 'OFF'
     }
+    
+    async function updateBuzzer(){
+      await fetch('/control/IO/buzzer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nodeID: nodeID,
+          buzzTime: document.querySelector('#buzzTime').value
+        })
+      })
+      .then(response => response.json())
+      .then(data => updateFields(data))
+    }
+
     </script>
   </body>
 </html>

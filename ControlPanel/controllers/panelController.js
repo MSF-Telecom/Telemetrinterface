@@ -35,6 +35,12 @@ exports.OIOut = function (req, res) {
       teleData[nodeID].out3 = outputs[2]
       teleData[nodeID].out4 = outputs[3]
 
+      // #####################
+      // #                   #
+      // # Send data to node #
+      // #                   #
+      // #####################
+
       res.send(teleData)
     }
     else {
@@ -45,6 +51,31 @@ exports.OIOut = function (req, res) {
     res.redirect('/login')
   }
 }
+
+exports.IOBuzzer = function (req, res) {
+  if(typeof req.session.user !== 'undefined') {
+    if(userDB.hasOwnProperty(req.session.user.name) && userDB[req.session.user.name].active) {
+      let nodeID = req.body.nodeID
+      let buzzTime = req.body.buzzTime
+
+      // #####################
+      // #                   #
+      // # Send data to node #
+      // #                   #
+      // #####################
+      
+      console.log(nodeID + ', ' + buzzTime)
+      res.send(teleData)
+    }
+    else {
+      res.redirect('/login')
+    }
+  }
+  else{
+    res.redirect('/login')
+  }
+}
+
 
 exports.dataOut = function (req, res) {
   if(typeof req.session.user !== 'undefined') {

@@ -130,108 +130,6 @@
       <li><a href="/">Home</a></li>
     </ul>
     <script type="text/javascript">
-
-    var slider = document.getElementById("buzzTime")
-    var output = document.getElementById("buzzer_Stat")
-    output.innerHTML = slider.value
-    slider.oninput = function() {
-      output.innerHTML = this.value
-    }
-
-    var Rs1 = document.getElementById("R1")
-    var R1_Stat = document.getElementById("R1_Stat")
-    R1_Stat.innerHTML = Rs1.value
-    Rs1.oninput = function() {
-      R1_Stat.innerHTML = this.value
-    }
-    var Gs1 = document.getElementById("G1")
-    var G1_Stat = document.getElementById("G1_Stat")
-    G1_Stat.innerHTML = Gs1.value
-    Gs1.oninput = function() {
-      G1_Stat.innerHTML = this.value
-    }
-    var Bs1 = document.getElementById("B1")
-    var B1_Stat = document.getElementById("B1_Stat")
-    B1_Stat.innerHTML = Bs1.value
-    Bs1.oninput = function() {
-      B1_Stat.innerHTML = this.value
-    }
-
-    var Rs2 = document.getElementById("R2")
-    var R2_Stat = document.getElementById("R2_Stat")
-    R2_Stat.innerHTML = Rs2.value
-    Rs2.oninput = function() {
-      R2_Stat.innerHTML = this.value
-    }
-    var Gs2 = document.getElementById("G2")
-    var G2_Stat = document.getElementById("G2_Stat")
-    G2_Stat.innerHTML = Gs2.value
-    Gs2.oninput = function() {
-      G2_Stat.innerHTML = this.value
-    }
-    var Bs2 = document.getElementById("B2")
-    var B2_Stat = document.getElementById("B2_Stat")
-    B2_Stat.innerHTML = Bs2.value
-    Bs2.oninput = function() {
-      B2_Stat.innerHTML = this.value
-    }
-
-    var Rs3 = document.getElementById("R3")
-    var R3_Stat = document.getElementById("R3_Stat")
-    R3_Stat.innerHTML = Rs3.value
-    Rs3.oninput = function() {
-      R3_Stat.innerHTML = this.value
-    }
-    var Gs3 = document.getElementById("G3")
-    var G3_Stat = document.getElementById("G3_Stat")
-    G3_Stat.innerHTML = Gs3.value
-    Gs3.oninput = function() {
-      G3_Stat.innerHTML = this.value
-    }
-    var Bs3 = document.getElementById("B3")
-    var B3_Stat = document.getElementById("B3_Stat")
-    B3_Stat.innerHTML = Bs3.value
-    Bs3.oninput = function() {
-      B3_Stat.innerHTML = this.value
-    }
-
-    var Rs4 = document.getElementById("R4")
-    var R4_Stat = document.getElementById("R4_Stat")
-    R4_Stat.innerHTML = Rs4.value
-    Rs4.oninput = function() {
-      R4_Stat.innerHTML = this.value
-    }
-    var Gs4 = document.getElementById("G4")
-    var G4_Stat = document.getElementById("G4_Stat")
-    G4_Stat.innerHTML = Gs4.value
-    Gs4.oninput = function() {
-      G4_Stat.innerHTML = this.value
-    }
-    var Bs4 = document.getElementById("B4")
-    var B4_Stat = document.getElementById("B4_Stat")
-    B4_Stat.innerHTML = Bs4.value
-    Bs4.oninput = function() {
-      B4_Stat.innerHTML = this.value
-    }
-
-    var Rs5 = document.getElementById("R5")
-    var R5_Stat = document.getElementById("R5_Stat")
-    R5_Stat.innerHTML = Rs5.value
-    Rs5.oninput = function() {
-      R5_Stat.innerHTML = this.value
-    }
-    var Gs5 = document.getElementById("G5")
-    var G5_Stat = document.getElementById("G5_Stat")
-    G5_Stat.innerHTML = Gs5.value
-    Gs5.oninput = function() {
-      G5_Stat.innerHTML = this.value
-    }
-    var Bs5 = document.getElementById("B5")
-    var B5_Stat = document.getElementById("B5_Stat")
-    B5_Stat.innerHTML = Bs5.value
-    Bs5.oninput = function() {
-      B5_Stat.innerHTML = this.value
-    }
     
     async function getOption() {
       selectElement = document.querySelector('#radio')
@@ -282,6 +180,123 @@
       document.querySelector('#OUT3_Stat').innerHTML = nodeData.out3 ? 'ON' : 'OFF'
       document.querySelector('#OUT4').checked = nodeData.out4
       document.querySelector('#OUT4_Stat').innerHTML = nodeData.out4 ? 'ON' : 'OFF'
+      document.querySelector('#R1').value = nodeData.led1[0]
+      document.querySelector('#G1').value = nodeData.led1[1]
+      document.querySelector('#B1').value = nodeData.led1[2]
+      document.querySelector('#R2').value = nodeData.led2[0]
+      document.querySelector('#G2').value = nodeData.led2[1]
+      document.querySelector('#B2').value = nodeData.led2[2]
+      document.querySelector('#R3').value = nodeData.led3[0]
+      document.querySelector('#G3').value = nodeData.led3[1]
+      document.querySelector('#B3').value = nodeData.led3[2]
+      document.querySelector('#R4').value = nodeData.led4[0]
+      document.querySelector('#G4').value = nodeData.led4[1]
+      document.querySelector('#B4').value = nodeData.led4[2]
+      document.querySelector('#R5').value = nodeData.led5[0]
+      document.querySelector('#G5').value = nodeData.led5[1]
+      document.querySelector('#B5').value = nodeData.led5[2]
+
+      var slider = document.getElementById("buzzTime")
+      var output = document.getElementById("buzzer_Stat")
+      output.innerHTML = slider.value
+      slider.oninput = function() {
+        output.innerHTML = this.value
+      }
+
+      var Rs1 = document.getElementById("R1")
+      var R1_Stat = document.getElementById("R1_Stat")
+      R1_Stat.innerHTML = Rs1.value
+      Rs1.oninput = function() {
+        R1_Stat.innerHTML = this.value
+      }
+      var Gs1 = document.getElementById("G1")
+      var G1_Stat = document.getElementById("G1_Stat")
+      G1_Stat.innerHTML = Gs1.value
+      Gs1.oninput = function() {
+        G1_Stat.innerHTML = this.value
+      }
+      var Bs1 = document.getElementById("B1")
+      var B1_Stat = document.getElementById("B1_Stat")
+      B1_Stat.innerHTML = Bs1.value
+      Bs1.oninput = function() {
+        B1_Stat.innerHTML = this.value
+      }
+
+      var Rs2 = document.getElementById("R2")
+      var R2_Stat = document.getElementById("R2_Stat")
+      R2_Stat.innerHTML = Rs2.value
+      Rs2.oninput = function() {
+        R2_Stat.innerHTML = this.value
+      }
+      var Gs2 = document.getElementById("G2")
+      var G2_Stat = document.getElementById("G2_Stat")
+      G2_Stat.innerHTML = Gs2.value
+      Gs2.oninput = function() {
+        G2_Stat.innerHTML = this.value
+      }
+      var Bs2 = document.getElementById("B2")
+      var B2_Stat = document.getElementById("B2_Stat")
+      B2_Stat.innerHTML = Bs2.value
+      Bs2.oninput = function() {
+        B2_Stat.innerHTML = this.value
+      }
+
+      var Rs3 = document.getElementById("R3")
+      var R3_Stat = document.getElementById("R3_Stat")
+      R3_Stat.innerHTML = Rs3.value
+      Rs3.oninput = function() {
+        R3_Stat.innerHTML = this.value
+      }
+      var Gs3 = document.getElementById("G3")
+      var G3_Stat = document.getElementById("G3_Stat")
+      G3_Stat.innerHTML = Gs3.value
+      Gs3.oninput = function() {
+        G3_Stat.innerHTML = this.value
+      }
+      var Bs3 = document.getElementById("B3")
+      var B3_Stat = document.getElementById("B3_Stat")
+      B3_Stat.innerHTML = Bs3.value
+      Bs3.oninput = function() {
+        B3_Stat.innerHTML = this.value
+      }
+
+      var Rs4 = document.getElementById("R4")
+      var R4_Stat = document.getElementById("R4_Stat")
+      R4_Stat.innerHTML = Rs4.value
+      Rs4.oninput = function() {
+        R4_Stat.innerHTML = this.value
+      }
+      var Gs4 = document.getElementById("G4")
+      var G4_Stat = document.getElementById("G4_Stat")
+      G4_Stat.innerHTML = Gs4.value
+      Gs4.oninput = function() {
+        G4_Stat.innerHTML = this.value
+      }
+      var Bs4 = document.getElementById("B4")
+      var B4_Stat = document.getElementById("B4_Stat")
+      B4_Stat.innerHTML = Bs4.value
+      Bs4.oninput = function() {
+        B4_Stat.innerHTML = this.value
+      }
+
+      var Rs5 = document.getElementById("R5")
+      var R5_Stat = document.getElementById("R5_Stat")
+      R5_Stat.innerHTML = Rs5.value
+      Rs5.oninput = function() {
+        R5_Stat.innerHTML = this.value
+      }
+      var Gs5 = document.getElementById("G5")
+      var G5_Stat = document.getElementById("G5_Stat")
+      G5_Stat.innerHTML = Gs5.value
+      Gs5.oninput = function() {
+        G5_Stat.innerHTML = this.value
+      }
+      var Bs5 = document.getElementById("B5")
+      var B5_Stat = document.getElementById("B5_Stat")
+      B5_Stat.innerHTML = Bs5.value
+      Bs5.oninput = function() {
+        B5_Stat.innerHTML = this.value
+      }
     }
     
     async function updateBuzzer(){

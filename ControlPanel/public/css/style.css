@@ -1,0 +1,11 @@
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  font-family: 'FiraCodeRegular';
+}
+
+a {
+  color: #068bd8;
+}

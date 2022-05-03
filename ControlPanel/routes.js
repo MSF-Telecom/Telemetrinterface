@@ -36,6 +36,8 @@ router.post('/control/IO/Out', panelController.OIOut)
 
 router.post('/control/IO/Buzzer', panelController.IOBuzzer)
 
+router.post('/control/IO/LED', panelController.IOLed)
+
 router.get('/control/data', panelController.dataOut)
 
 router.get('/get',function(req, res){

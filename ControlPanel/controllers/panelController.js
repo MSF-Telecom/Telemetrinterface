@@ -86,6 +86,7 @@ exports.IOLed = function (req, res) {
       let nodeID = req.body.nodeID
       let led = req.body.led
       let RGB = [req.body.R, req.body.G, req.body.B]
+      teleData[nodeID]['led'+led] = RGB
 
       // #####################
       // #                   #

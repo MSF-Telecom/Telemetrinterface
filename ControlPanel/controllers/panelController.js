@@ -125,3 +125,9 @@ exports.dataOut = function (req, res) {
     res.redirect('/login')
   }
 }
+
+exports.dataIn = function (req, res) {
+  let data = req.json
+  console.log(data)
+  res.send(teleData)
+}

@@ -40,6 +40,8 @@ router.post('/control/IO/LED', panelController.IOLed)
 
 router.get('/control/data', panelController.dataOut)
 
+router.post('/control/data', panelController.dataIn)
+
 router.get('/get',function(req, res){
   res.send(req.session)
 })

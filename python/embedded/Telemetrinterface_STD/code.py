@@ -90,10 +90,10 @@ while True:
   )
   msgs[3] = IOImsg
 
-  ANImsg = "$ANI,{},{},{},{}".format(
+  AINmsg = "$AIN,{},{},{},{}".format(
     nodeData["ain1"], nodeData["ain2"], nodeData["ain3"], nodeData["vsup"]
   )
-  msgs[4] = ANImsg
+  msgs[4] = AINmsg
 
   IOOmsg = "$IOO,{},{},{},{}".format(
     1 if nodeData["out1"] else 0, 

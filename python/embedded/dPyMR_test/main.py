@@ -8,9 +8,9 @@ uart = busio.UART(board.GP16, board.GP17, baudrate=9600, timeout=2)
 
 ownID = 1748
 otherID = 1107
-msg = 'This is an embedded test ! :D'
+msg = "This is an embedded test ! :D"
 
-radio = dPyMR.Transceiver(uart, ownID)
+radio = dPyMR.Transceiver(uart, ownID, verbose=True)
 
 led = digitalio.DigitalInOut(board.LED)
 pin = digitalio.DigitalInOut(board.GP0)
@@ -25,8 +25,8 @@ pin.value = False
 while True:
   msgSent = False
   while msgSent == False:
-    if radio.sendMessage(msg, otherID, verbose=True) == 'ACK_OK':
-      print('ACK_OK')
+    if radio.sendMessage(msg, otherID, verbose=True) == "ACK_OK":
+      print("ACK_OK")
       msgSent = True
     time.sleep(2)
 

@@ -184,7 +184,7 @@ class Transceiver :
         print('<- {}'.format(response))
         
 
-    return (int(response.split(',')[5]), int(response.split(',')[5]), response.split(',MSG,"')[-1].split('"')[0])
+    return (int(response.split(',')[4]), int(response.split(',')[5]), response.split(',MSG,"')[-1].split('"')[0])
 
   def setChannel(self, channel, resetDefault = False, verbose = False):
     """

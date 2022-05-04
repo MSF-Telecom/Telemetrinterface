@@ -127,7 +127,8 @@ exports.dataOut = function (req, res) {
 }
 
 exports.dataIn = function (req, res) {
-  let data = req.json
+  let data = req.body
   console.log(data)
+  teleData = data
   res.send(teleData)
 }

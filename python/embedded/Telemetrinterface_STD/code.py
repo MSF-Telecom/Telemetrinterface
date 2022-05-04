@@ -16,6 +16,10 @@ usbsense.pull = digitalio.Pull.DOWN
 led = digitalio.DigitalInOut(board.GP25)
 led.direction = digitalio.Direction.OUTPUT
 
+led.value = True
+time.sleep(0.25)
+led.value = False
+
 prevSwitchValue = usbsense.value
 
 if usbsense.value and debug == False:
@@ -37,7 +41,7 @@ radio = dPyMR.Transceiver(uart, ownID, verbose=True)
 
 nodeData = {"CPUTemp": [microcontroller.cpus[0].temperature, microcontroller.cpus[0].temperature],
             "CPUVolt": microcontroller.cpu.voltage, "Vers" : 1.0, "Reset" : microcontroller.cpu.reset_reason,
-            "Push": True, "PushTime": 10,
+            "Push": True, "PushTime": 15,
             "temp": 21.5, "hum": 42, "press": 1023,
             "accel" : [9.81, 0.0, 0.0],
             "in1": False, "in2": False, "in3": False, "in4": False,
@@ -125,4 +129,13 @@ while True:
         print("TX_FAILED")
         time.sleep(2)
 
-  time.sleep(nodeData["PushTime"])
+  timeNow = time.time()
+  while time.time() - timeNow < nodeData["PushTime"]:
+    inMSG = radio.receiveMessage()
+    print(inMSG)
+    if '$BUZ' in inMSG[2]:
+      delay = float(inMSG[2].split(",")[1])
+      if delay > 0:
+        led.value = True
+        time.sleep(delay/1000)
+        led.value = False

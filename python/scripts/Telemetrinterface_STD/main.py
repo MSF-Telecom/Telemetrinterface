@@ -38,7 +38,7 @@ while(True):
   print('<- {}'.format(inMessage))
   if inMessage[2].startswith('$'):
     nodeID = inMessage[0]
-    if inMessage not in teleData:
+    if nodeID not in teleData:
       teleData[nodeID] = {
             "CPUTemp": [0, 0],
             "CPUVolt": 0, "Vers" : 0.0, "Reset" : '',
@@ -102,7 +102,6 @@ while(True):
       teleData[nodeID]['led5'][2] = float(data[15])
     else:
       print('Unknown frame: {}'.format(data))
-
     r = requests.post('http://localhost:8080/control/data', json=teleData)
     print(r.status_code, r.reason)
 

@@ -6,6 +6,8 @@ import storage
 import lib.dPyMR as dPyMR
 import busio
 
+debug = True
+
 usbsense = digitalio.DigitalInOut(board.VBUS_SENSE)
 
 usbsense.direction = digitalio.Direction.INPUT
@@ -16,7 +18,7 @@ led.direction = digitalio.Direction.OUTPUT
 
 prevSwitchValue = usbsense.value
 
-if usbsense.value:
+if usbsense.value and debug == False:
   while True:
     led.value = True
     time.sleep(0.25)

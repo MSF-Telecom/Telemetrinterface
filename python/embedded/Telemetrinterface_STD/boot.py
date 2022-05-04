@@ -14,4 +14,7 @@ switch.pull = digitalio.Pull.DOWN
 
 # If the switch pin is connected to ground CircuitPython can write to the drive
 USB_Connected = switch.value
-storage.remount("/", USB_Connected)
+
+debug = True
+
+storage.remount("/", (USB_Connected and debug == False))

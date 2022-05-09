@@ -43,13 +43,40 @@ teleData = {0:
 
 app = Flask(__name__)
 
-@app.route('/control/data', methods=['POST'])
+@app.route('/control/outputs', methods=['POST'])
+def setOutputs():
+  data = json.loads(request.data.decode('utf-8'))
+  print(data)
+
+  ########################
+  #                      #
+  # Handle Output data   #
+  #                      #
+  ########################
+
+  return 'OK'
+
+@app.route('/control/buzzer', methods=['POST'])
 def result():
   print("Got data !!!!!")
   data = json.loads(request.data.decode("utf-8"))
   print(data)  # raw data
   radio.sendMessage('$BUZ,{}'.format(int(data["buzzTime"])), otherID, verbose=True)
   return 'OK'
+
+@app.route('/control/leds', methods=['GET'])
+def leds():
+  data = json.loads(request.data.decode("utf-8"))
+  print(data)  # raw data
+
+  ########################
+  #                      #
+  #   Handle LED data    #
+  #                      #
+  ########################
+
+  return 'OK'
+
 
 @app.route('/control/nodes', methods=['POST'])
 def nodes():

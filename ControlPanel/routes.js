@@ -4,6 +4,7 @@ const mainSiteController = require('./controllers/mainSiteController')
 const userController = require('./controllers/userController')
 const loginController = require('./controllers/loginController')
 const panelController = require('./controllers/panelController')
+const dPyMRController = require('./controllers/dPyMRController')
 const router = express.Router()
 
 router.use(bodyParser.urlencoded({ extended: true }))

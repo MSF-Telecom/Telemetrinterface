@@ -1,4 +1,5 @@
 const userDB = require('../usersDB.json')
+const dPyMRController = require('../controllers/dPyMRController')
 
 teleData = {
       1107: {CPUTemp: [29.4, 36.5], CPUVolt: 1.1, Vers : 1.0, reset : 'none',
@@ -45,11 +46,7 @@ exports.OIOut = function (req, res) {
       teleData[nodeID].out3 = outputs[2]
       teleData[nodeID].out4 = outputs[3]
 
-      // #####################
-      // #                   #
-      // # Send data to node #
-      // #                   #
-      // #####################
+      dPyMRController.outputs(nodeID, outputs)
 
       res.send(teleData)
     }
@@ -68,11 +65,7 @@ exports.IOBuzzer = function (req, res) {
       let nodeID = req.body.nodeID
       let buzzTime = req.body.buzzTime
 
-      // #####################
-      // #                   #
-      // # Send data to node #
-      // #                   #
-      // #####################
+      dPyMRController.buzzer(nodeID, buzzTime)
       
       console.log(nodeID + ', ' + buzzTime)
       res.send(teleData)
@@ -94,11 +87,7 @@ exports.IOLed = function (req, res) {
       let RGB = [req.body.R, req.body.G, req.body.B]
       teleData[nodeID]['led'+led] = RGB
 
-      // #####################
-      // #                   #
-      // # Send data to node #
-      // #                   #
-      // #####################
+      dPyMRController.leds(nodeID, led, RGB)
 
       console.log(nodeID + ', ' + led + ', ' + RGB)
       res.send(teleData)

@@ -342,13 +342,6 @@
     }
     
     async function updateBuzzer(){
-      await fetch('http://127.0.0.1:8081/control/data', {
-        method: 'POST',
-        body: JSON.stringify({
-          nodeID: nodeID,
-          buzzTime: document.querySelector('#buzzTime').value
-        })
-      })
 
       await fetch('/control/IO/buzzer', {
         method: 'POST',

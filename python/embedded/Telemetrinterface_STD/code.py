@@ -39,6 +39,8 @@ maxRetries = 5
 
 radio = dPyMR.Transceiver(uart, ownID, verbose=True)
 
+parser = dPyMR.telemetrinterfaceFrameParser()
+
 nodeData = {"CPUTemp": [microcontroller.cpus[0].temperature, microcontroller.cpus[0].temperature],
             "CPUVolt": microcontroller.cpu.voltage, "Vers" : 1.0, "Reset" : microcontroller.cpu.reset_reason,
             "Push": True, "PushTime": 15,
@@ -50,7 +52,7 @@ nodeData = {"CPUTemp": [microcontroller.cpus[0].temperature, microcontroller.cpu
             "led1" : [34,198,0], "led2" : [12,0,230], "led3" : [44,27,102],
             "led4" : [0,44,128], "led5" : [243,14,95]}
 
-while True:
+def sendNodeData():
   nodeData = {"CPUTemp": [microcontroller.cpus[0].temperature, microcontroller.cpus[0].temperature],
             "CPUVolt": microcontroller.cpu.voltage, "Vers" : 1.0, "Reset" : microcontroller.cpu.reset_reason,
             "Push": True, "PushTime": 10,
@@ -129,13 +131,73 @@ while True:
         print("TX_FAILED")
         time.sleep(2)
 
-  timeNow = time.time()
-  while time.time() - timeNow < nodeData["PushTime"]:
+
+while True:
+  
+  if nodeData["Push"]:
+    sendNodeData()
+
+    timeNow = time.time()
+    while time.time() - timeNow < nodeData["PushTime"]:
+      inMSG = radio.receiveMessage()
+      print(inMSG)
+      if '$BUZ' in inMSG[2]:
+        delay = float(inMSG[2].split(",")[1])
+        if delay > 0:
+          led.value = True
+          time.sleep(delay/1000)
+          led.value = False
+  else :
     inMSG = radio.receiveMessage()
     print(inMSG)
-    if '$BUZ' in inMSG[2]:
-      delay = float(inMSG[2].split(",")[1])
-      if delay > 0:
-        led.value = True
-        time.sleep(delay/1000)
-        led.value = False
+    if '$' in inMSG[2]:
+      data = parser.parseFrame(inMSG[2])
+      print(data)
+      if data[0] == "GET":
+        # GET command, pulls data from the node
+        sendNodeData()
+
+      elif data[0] == "SYS":
+        # SYS command, sets the node's system values (CPU vand Reset values may be overwritten by the node)
+        for key in data[1]:
+          nodeData[key] = data[1][key]
+
+      elif data[0] == "SET":
+        # SET command, sets the node's push and push time
+        for key in data[1]:
+          nodeData[key] = data[1][key]
+
+      elif data[0] == "ENV":
+        # ENV command, sets the node's environmental values (may be overwritten by the node)
+        for key in data[1]:
+          nodeData[key] = data[1][key]
+
+      elif data[0] == "IOI":
+        # IOI command, sets the node's input values (may be overwritten by the node)
+        for key in data[1]:
+          nodeData[key] = data[1][key]
+
+      elif data[0] == "AIN":
+        # AIN command, sets the node's analog input values (may be overwritten by the node)
+        for key in data[1]:
+          nodeData[key] = data[1][key]
+
+      elif data[0] == "IOO":
+        # IOO command, sets the node's output values
+        for key in data[1]:
+          nodeData[key] = data[1][key]
+
+      elif data[0] == "LED":
+        # LED command, sets the node's LED values
+        for key in data[1]:
+          nodeData[key] = data[1][key]
+      elif data[0] == "BUZ":
+        # BUZ command, sets the node's buzzer values
+        delay = float(data[1]["buzz"])
+        if delay > 0:
+          led.value = True
+          time.sleep(delay/1000)
+          led.value = False
+
+      else :
+        print(data)

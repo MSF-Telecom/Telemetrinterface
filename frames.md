@@ -12,7 +12,7 @@ System : System data such as core temperature, core voltage, firmware version an
 
 > Sent from node to server
 
-Example frame : ```$SYS,T,25.5,27.4,V,3.3,F,1.0,R,0```
+Example frame : ```$SYS,T,25.5,27.4,V,3.3,F,1.0,R,"[reset reason]"```
 
 ### ```$SET```
 
@@ -69,3 +69,11 @@ Buzzer State : Duration of a buzzer sound (miliseconds) to trigger on a node.
 > Sent from server to node
 
 Example frame : ```$BUZ,500```
+
+### ```$GET```
+
+Get : Request all data from a node.
+
+> Sent from server to node
+
+Example frame : ```$GET```

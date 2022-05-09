@@ -254,5 +254,50 @@ class Transceiver :
     """
     return '{:0>{l}}'.format(string, l=length)
 
+
+class telemetrinterfaceFrameParser:
+  def __init__(self):
+    pass
+
+  def parseFrame(self, frame):
+    if '$GET' in frame:
+      return ("GET", True)
+    elif '$SYS' in frame:
+      data = frame.split(",")
+      return ("SYS", {"CPUTemp": [float(data[2]), float(data[3])],
+              "CPUVolt": float(data[5]), "Vers": float(data[7]), "Reset": data[9]})
+    elif '$SET' in frame:
+      data = frame.split(",")
+      return ("SET", {"Push": True if int(data[2]) == 1 else False, "PushTime": int(data[4])})
+    elif '$ENV' in frame:
+      data = frame.split(",")
+      return ("ENV", {"temp": float(data[2]), "hum": float(data[4]), "press": float(data[6]),
+              "accel": [float(data[8]), float(data[9]), float(data[10])]})
+    elif '$IOI' in frame:
+      data = frame.split(",")
+      return ("IOI", {"in1": True if int(data[1]) == 1 else False, "in2": True if int(data[2]) == 1 else False,
+              "in3": True if int(data[3]) == 1 else False, "in4": True if int(data[4]) == 1 else False})
+    elif '$ANI' in frame:
+      data = frame.split(",")
+      return ("ANI", {"ain1": float(data[1]), "ain2": float(data[2]), "ain3": float(data[3]), "vsup": float(data[4])})
+    elif '$IOO' in frame:
+      data = frame.split(",")
+      return ("IOO", {"out1": True if int(data[1]) == 1 else False, "out2": True if int(data[2]) == 1 else False,
+              "out3": True if int(data[3]) == 1 else False, "out4": True if int(data[4]) == 1 else False})
+    elif '$LED' in frame:
+      data = frame.split(",")
+      return ("LED", {"led1": [int(data[1]), int(data[2]), int(data[3])],
+              "led2": [int(data[4]), int(data[5]), int(data[6])],
+              "led3": [int(data[7]), int(data[8]), int(data[9])],
+              "led4": [int(data[10]), int(data[11]), int(data[12])],
+              "led5": [int(data[13]), int(data[14]), int(data[15])]})
+    elif 'BUZZ' in frame:
+      data = frame.split(",")
+      return ("BUZZ", {"buzz": int(data[1])})
+    else :
+      return ("UNKNOWN", False)
+
+
 if __name__ == '__main__':
   help(Transceiver)
+

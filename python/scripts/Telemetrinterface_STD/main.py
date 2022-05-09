@@ -51,9 +51,14 @@ def result():
   radio.sendMessage('$BUZ,{}'.format(int(data["buzzTime"])), otherID, verbose=True)
   return 'OK'
 
+@app.route('/control/nodes', methods=['POST'])
+def nodes():
+  print("Web interface asked for nodes")
+  return json.dumps(teleData)
+
 @app.route('/', methods=['GET'])
 def home():
-  return 'Hello World!'
+  return 'Nothing to see here, just working in the background...'
 
 def radioHandler():
   while(True):
@@ -108,7 +113,7 @@ def radioHandler():
       else:
         print('Unknown frame: {}'.format(data))
 
-      r = requests.post('http://localhost:8080/control/data', json=teleData)
+      #r = requests.post('http://localhost:8080/control/data', json=teleData)
       #print(r.status_code, r.reason)
 
 

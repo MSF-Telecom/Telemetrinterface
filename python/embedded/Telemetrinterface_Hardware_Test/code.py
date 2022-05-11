@@ -10,7 +10,7 @@ buzzer_pin = board.BUZZ
 num_pixels = 5
 
 
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.3, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=1, auto_write=False)
 
 
 toggle = adafruit_pioasm.assemble(
@@ -20,11 +20,12 @@ toggle = adafruit_pioasm.assemble(
 """
 )
 
-for _ in range(0, 3):
+for i in range(0, 5):
+  pixels[4-i]= (255, 255, 255)
   sm = rp2pio.StateMachine(
           toggle, frequency=2000, first_set_pin=buzzer_pin
       )
-
+  pixels.show()
   time.sleep(0.1)
   sm.deinit()
   time.sleep(0.1)
@@ -47,30 +48,5 @@ def rainbow_cycle(wait):
     time.sleep(wait)
 
 
-RED = (255, 0, 0)
-YELLOW = (255, 150, 0)
-GREEN = (0, 255, 0)
-CYAN = (0, 255, 255)
-BLUE = (0, 0, 255)
-PURPLE = (180, 0, 255)
-
 while True:
-  pixels.fill(RED)
-  pixels.show()
-  # Increase or decrease to change the speed of the solid color change.
-  time.sleep(1)
-  pixels.fill(GREEN)
-  pixels.show()
-  time.sleep(1)
-  pixels.fill(BLUE)
-  pixels.show()
-  time.sleep(1)
-
-  color_chase(RED, 0.1)  # Increase the number to slow down the color chase
-  color_chase(YELLOW, 0.1)
-  color_chase(GREEN, 0.1)
-  color_chase(CYAN, 0.1)
-  color_chase(BLUE, 0.1)
-  color_chase(PURPLE, 0.1)
-
-  rainbow_cycle(0)  # Increase the number to slow down the rainbow
+  rainbow_cycle(0.005)  # Increase the number to slow down the rainbow

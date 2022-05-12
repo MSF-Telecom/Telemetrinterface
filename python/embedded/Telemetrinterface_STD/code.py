@@ -5,6 +5,8 @@ import microcontroller
 import storage
 import lib.dPyMR as dPyMR
 import busio
+from adafruit_bme280 import basic as adafruit_bme280
+import adafruit_adxl34x
 
 debug = True
 
@@ -12,13 +14,6 @@ usbsense = digitalio.DigitalInOut(board.USBSENSE)
 
 usbsense.direction = digitalio.Direction.INPUT
 usbsense.pull = digitalio.Pull.DOWN
-
-led = digitalio.DigitalInOut(board.GP25)
-led.direction = digitalio.Direction.OUTPUT
-
-led.value = True
-time.sleep(0.25)
-led.value = False
 
 prevSwitchValue = usbsense.value
 
@@ -52,12 +47,19 @@ nodeData = {"CPUTemp": [microcontroller.cpus[0].temperature, microcontroller.cpu
             "led1" : [34,198,0], "led2" : [12,0,230], "led3" : [44,27,102],
             "led4" : [0,44,128], "led5" : [243,14,95]}
 
+
+i2c = busio.I2C(board.SCL, board.SDA)  # SCL, SDA
+bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
+
+accelerometer = adafruit_adxl34x.ADXL345(i2c)
+
+
 def sendNodeData():
   nodeData = {"CPUTemp": [microcontroller.cpus[0].temperature, microcontroller.cpus[0].temperature],
             "CPUVolt": microcontroller.cpu.voltage, "Vers" : 1.0, "Reset" : microcontroller.cpu.reset_reason,
             "Push": False, "PushTime": 10,
-            "temp": 21.5, "hum": 42, "press": 1023,
-            "accel" : [9.81, 0.0, 0.0],
+            "temp": bme280.temperature, "hum": bme280.relative_humidity, "press": bme280.pressure,
+            "accel" : accelerometer.acceleration,
             "in1": False, "in2": False, "in3": False, "in4": False,
             "out1": False, "out2": False, "out3": False, "out4": False,
             "ain1": 12.6, "ain2": 4.7, "ain3": 24.2, "vsup": 13.8,

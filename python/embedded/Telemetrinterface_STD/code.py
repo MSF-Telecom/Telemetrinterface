@@ -8,7 +8,7 @@ import busio
 
 debug = True
 
-usbsense = digitalio.DigitalInOut(board.VBUS_SENSE)
+usbsense = digitalio.DigitalInOut(board.USBSENSE)
 
 usbsense.direction = digitalio.Direction.INPUT
 usbsense.pull = digitalio.Pull.DOWN
@@ -43,7 +43,7 @@ parser = dPyMR.telemetrinterfaceFrameParser()
 
 nodeData = {"CPUTemp": [microcontroller.cpus[0].temperature, microcontroller.cpus[0].temperature],
             "CPUVolt": microcontroller.cpu.voltage, "Vers" : 1.0, "Reset" : microcontroller.cpu.reset_reason,
-            "Push": True, "PushTime": 15,
+            "Push": False, "PushTime": 15,
             "temp": 21.5, "hum": 42, "press": 1023,
             "accel" : [9.81, 0.0, 0.0],
             "in1": False, "in2": False, "in3": False, "in4": False,
@@ -55,7 +55,7 @@ nodeData = {"CPUTemp": [microcontroller.cpus[0].temperature, microcontroller.cpu
 def sendNodeData():
   nodeData = {"CPUTemp": [microcontroller.cpus[0].temperature, microcontroller.cpus[0].temperature],
             "CPUVolt": microcontroller.cpu.voltage, "Vers" : 1.0, "Reset" : microcontroller.cpu.reset_reason,
-            "Push": True, "PushTime": 10,
+            "Push": False, "PushTime": 10,
             "temp": 21.5, "hum": 42, "press": 1023,
             "accel" : [9.81, 0.0, 0.0],
             "in1": False, "in2": False, "in3": False, "in4": False,

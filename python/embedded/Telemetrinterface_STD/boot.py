@@ -7,13 +7,13 @@ import board
 import digitalio
 import storage
 
-switch = digitalio.DigitalInOut(board.VBUS_SENSE)
+usbsense = digitalio.DigitalInOut(board.USBSENSE)
 
-switch.direction = digitalio.Direction.INPUT
-switch.pull = digitalio.Pull.DOWN
+usbsense.direction = digitalio.Direction.INPUT
+usbsense.pull = digitalio.Pull.DOWN
 
 # If the switch pin is connected to ground CircuitPython can write to the drive
-USB_Connected = switch.value
+USB_Connected = usbsense.value
 
 debug = True
 

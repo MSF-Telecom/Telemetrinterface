@@ -277,9 +277,9 @@ class telemetrinterfaceFrameParser:
       data = frame.split(",")
       return ("IOI", {"in1": True if int(data[1]) == 1 else False, "in2": True if int(data[2]) == 1 else False,
               "in3": True if int(data[3]) == 1 else False, "in4": True if int(data[4]) == 1 else False})
-    elif '$ANI' in frame:
+    elif '$AIN' in frame:
       data = frame.split(",")
-      return ("ANI", {"ain1": float(data[1]), "ain2": float(data[2]), "ain3": float(data[3]), "vsup": float(data[4])})
+      return ("AIN", {"ain1": float(data[1]), "ain2": float(data[2]), "ain3": float(data[3]), "vsup": float(data[4])})
     elif '$IOO' in frame:
       data = frame.split(",")
       return ("IOO", {"out1": True if int(data[1]) == 1 else False, "out2": True if int(data[2]) == 1 else False,
@@ -291,9 +291,9 @@ class telemetrinterfaceFrameParser:
               "led3": [int(data[7]), int(data[8]), int(data[9])],
               "led4": [int(data[10]), int(data[11]), int(data[12])],
               "led5": [int(data[13]), int(data[14]), int(data[15])]})
-    elif 'BUZZ' in frame:
+    elif '$BUZ' in frame:
       data = frame.split(",")
-      return ("BUZZ", {"buzz": int(data[1])})
+      return ("BUZ", {"buzz": int(data[1])})
     else :
       return ("UNKNOWN", False)
 

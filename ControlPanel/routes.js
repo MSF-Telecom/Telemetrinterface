@@ -39,7 +39,7 @@ router.post('/control/IO/Buzzer', panelController.IOBuzzer)
 
 router.post('/control/IO/LED', panelController.IOLed)
 
-router.get('/control/data', panelController.dataOut)
+router.get('/control/data', panelController.askData)
 
 router.post('/control/data', panelController.dataIn)
 

@@ -154,7 +154,11 @@
       let data = {}
       await fetch('/control/data')
       .then(response => response.json())
-      .then(data => updateFields(data[nodeID]))
+      .then(data => {
+        console.log(data)
+        updateFields(data, nodeID)
+        
+      })
     }
 
     async function updateOutputs(){
@@ -173,11 +177,20 @@
         })
       })
       .then(response => response.json())
-      .then(data => updateFields(data))
+      .then(data => updateFields(data, nodeID))
     }
 
-    function updateFields(data){
-      nodeData = data
+    function updateFields(data, nodeID){
+      nodeData = data[nodeID]
+
+      let selectHTML = ""
+      for (let key in data) {
+        let isSelected = (key == nodeID) ? "selected" : ""
+        selectHTML += '<option value="'+ key+'"' + isSelected + '>'+ key + '</option>\n'
+      }
+
+      document.querySelector('#radio').innerHTML = selectHTML
+
       document.querySelector('.CPU0Temp').textContent = nodeData.CPUTemp[0]
       document.querySelector('.CPU1Temp').textContent = nodeData.CPUTemp[1]
       document.querySelector('.CPUVolt').textContent = nodeData.CPUVolt
@@ -354,7 +367,7 @@
         })
       })
       .then(response => response.json())
-      .then(data => updateFields(data))
+      .then(data => updateFields(data, nodeID))
     }
 
     function updateLEDs(led){
@@ -366,9 +379,22 @@
     }
 
     async function updateLED(led) {
-      var R = document.getElementById("R"+led).value
-      var G = document.getElementById("G"+led).value
-      var B = document.getElementById("B"+led).value
+      var R1 = document.getElementById("R1").value
+      var G1 = document.getElementById("G1").value
+      var B1 = document.getElementById("B1").value
+      var R2 = document.getElementById("R2").value
+      var G2 = document.getElementById("G2").value
+      var B2 = document.getElementById("B2").value
+      var R3 = document.getElementById("R3").value
+      var G3 = document.getElementById("G3").value
+      var B3 = document.getElementById("B3").value
+      var R4 = document.getElementById("R4").value
+      var G4 = document.getElementById("G4").value
+      var B4 = document.getElementById("B4").value
+      var R5 = document.getElementById("R5").value
+      var G5 = document.getElementById("G5").value
+      var B5 = document.getElementById("B5").value
+
       
       await fetch('/control/IO/LED', {
         method: 'POST',
@@ -377,14 +403,17 @@
         },
         body: JSON.stringify({
           nodeID: nodeID,
-          led: led,
-          R: R,
-          G: G,
-          B: B
+          RGB: [
+            R1, G1, B1,
+            R2, G2, B2,
+            R3, G3, B3,
+            R4, G4, B4,
+            R5, G5, B5
+          ]
         })
       })
       .then(response => response.json())
-      .then(data => updateFields(data))
+      .then(data => updateFields(data, nodeID))
     }
     </script>
   </body>

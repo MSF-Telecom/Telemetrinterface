@@ -17,4 +17,4 @@ USB_Connected = usbsense.value
 
 debug = True
 
-storage.remount("/", (USB_Connected and debug == False))
+#storage.remount("/", (USB_Connected and debug == False))

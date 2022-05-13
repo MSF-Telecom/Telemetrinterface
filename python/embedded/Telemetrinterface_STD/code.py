@@ -123,7 +123,7 @@ for i in range(0, 5):
   pixels[4-i]= (0, 0, 0)
 pixels.show()
 
-# TODO : map with correct formula (considering resistor values, ADC resolution, etc.)
+# TODO for v2.0 Hardware : change resistor value from 68k to 680k
 def get_voltage(pin):
   return (pin.value * 440) / 65536
 

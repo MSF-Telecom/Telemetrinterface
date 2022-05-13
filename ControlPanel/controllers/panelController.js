@@ -1,5 +1,7 @@
 const userDB = require('../usersDB.json')
 const dPyMRController = require('../controllers/dPyMRController')
+const axios = require('axios')
+
 
 teleData = {
       1107: {CPUTemp: [29.4, 36.5], CPUVolt: 1.1, Vers : 1.0, reset : 'none',
@@ -79,17 +81,19 @@ exports.IOBuzzer = function (req, res) {
   }
 }
 
-exports.IOLed = function (req, res) {
+exports.IOLed = async function (req, res) {
   if(typeof req.session.user !== 'undefined') {
     if(userDB.hasOwnProperty(req.session.user.name) && userDB[req.session.user.name].active) {
       let nodeID = req.body.nodeID
-      let led = req.body.led
-      let RGB = [req.body.R, req.body.G, req.body.B]
-      teleData[nodeID]['led'+led] = RGB
+      let RGB = req.body.RGB
 
-      dPyMRController.leds(nodeID, led, RGB)
+      teleData[nodeID]['led1'] = [RGB[0], RGB[1], RGB[2]]
+      teleData[nodeID]['led2'] = [RGB[3], RGB[4], RGB[5]]
+      teleData[nodeID]['led3'] = [RGB[6], RGB[7], RGB[8]]
+      teleData[nodeID]['led4'] = [RGB[9], RGB[10], RGB[11]]
+      teleData[nodeID]['led5'] = [RGB[12], RGB[13], RGB[14]]
 
-      console.log(nodeID + ', ' + led + ', ' + RGB)
+      dPyMRController.leds(nodeID, RGB)
       res.send(teleData)
     }
     else {
@@ -119,4 +123,23 @@ exports.dataIn = function (req, res) {
   let data = req.body
   teleData = data
   res.send(teleData)
+}
+
+exports.askData = async function (req, res) {
+  if(typeof req.session.user !== 'undefined') {
+    if(userDB.hasOwnProperty(req.session.user.name) && userDB[req.session.user.name].active) {
+      teleData = {}
+      await axios.post('http://127.0.0.1:8081/control/nodes', {})
+      .then((res) => {
+        teleData = res.data
+      })
+      res.send(teleData)
+    }
+    else {
+      res.redirect('/login')
+    }
+  }
+  else{
+    res.redirect('/login')
+  }
 }

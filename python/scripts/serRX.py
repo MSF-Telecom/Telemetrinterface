@@ -1,12 +1,4 @@
-import pynmea2
-import re
 import serial
-import io
-import requests
-
-
-def sendtraccar(radioid, lat, lon):
-    requests.post('http://mdasilva.eu:5055', data = {'id' : radioid, 'lat': lat, 'lon': lon})
 
 
 ser=serial.Serial('/dev/tty.usbserial-145230', 4800, timeout = 2)

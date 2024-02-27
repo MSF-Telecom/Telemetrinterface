@@ -23,8 +23,8 @@ usbsense.pull = digitalio.Pull.DOWN
 
 uart = busio.UART(board.TX0, board.RX0, baudrate=9600, timeout=2)
 
-ownID = 1748
-otherID = 1107
+ownID = 4324
+otherID = 6210
 maxRetries = 5
 
 radio = dPyMR.Transceiver(uart, ownID, verbose=True)

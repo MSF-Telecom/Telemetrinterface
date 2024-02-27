@@ -67,6 +67,18 @@ def activate_job():
   thread = threading.Thread(target=run_job)
   thread.start()
 
+@app.route('/control/mode', methods=['POST'])
+def setPollMode():
+  data = json.loads(request.data.decode('utf-8'))
+  print("Web interface updated mode")
+  print(data)
+  msg = '$SYS,{},{}'.format(data['mode'], 15)
+  ID = int(data['nodeID'])
+
+  transmitMessage(msg, ID)
+  return 'OK'
+
+
 @app.route('/control/outputs', methods=['POST'])
 def setOutputs():
   data = json.loads(request.data.decode('utf-8'))

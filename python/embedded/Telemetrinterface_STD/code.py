@@ -252,11 +252,6 @@ def listenForCommand(inMSG):
     if data[0] == "GET":
       # GET command, pulls data from the node
       sendNodeData()
-    
-    elif data[0] == "MOD":
-      # Sets poll mode
-      nodeData["Push"] = True if data[1]["push"] == "push" else False
-      nodeData["PushTime"] = data[1]["pushTime"]
 
     elif data[0] == "SYS":
       # SYS command, sets the node's system values (CPU vand Reset values may be overwritten by the node)

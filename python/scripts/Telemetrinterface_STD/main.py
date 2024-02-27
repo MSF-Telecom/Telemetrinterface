@@ -140,7 +140,8 @@ def setPollMode():
   data = json.loads(request.data.decode('utf-8'))
   print("Web interface updated mode")
   print(data)
-  msg = '$MOD,{},{}'.format(data['mode'], 15)
+  mode = 1 if data['mode'] == "push" else 0
+  msg = '$SET,P,{},I,{}'.format(mode, 15)
   ID = int(data['nodeID'])
 
   transmitMessage(msg, ID)

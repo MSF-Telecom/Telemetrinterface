@@ -266,9 +266,6 @@ class telemetrinterfaceFrameParser:
       data = frame.split(",")
       return ("SYS", {"CPUTemp": [float(data[2]), float(data[3])],
               "CPUVolt": float(data[5]), "Vers": float(data[7]), "Reset": data[9]})
-    elif '$MOD' in frame:
-      data = frame.split(",")
-      return ("MOD", {"push": data[2], "pushTime": int(data[3])})
     elif '$SET' in frame:
       data = frame.split(",")
       return ("SET", {"Push": True if int(data[2]) == 1 else False, "PushTime": int(data[4])})

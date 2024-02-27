@@ -38,6 +38,25 @@ exports.controlPage = function (req, res) {
   }
 }
 
+exports.pollMode = function (req, res) {
+  if(typeof req.session.user !== 'undefined') {
+    if(userDB.hasOwnProperty(req.session.user.name) && userDB[req.session.user.name].active) {
+      let nodeID = req.body.nodeID
+      let mode = req.body.mode
+
+      dPyMRController.mode(nodeID, mode)
+      teleData[nodeID].mode = mode
+      res.send(teleData)
+    }
+    else {
+      res.redirect('/login')
+    }
+  }
+  else{
+    res.redirect('/login')
+  }
+}
+
 exports.OIOut = function (req, res) {
   if(typeof req.session.user !== 'undefined') {
     if(userDB.hasOwnProperty(req.session.user.name) && userDB[req.session.user.name].active) {

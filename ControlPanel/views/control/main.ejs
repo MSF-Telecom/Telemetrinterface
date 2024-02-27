@@ -11,6 +11,14 @@
     </select>
     <button onclick="getOption()">Redraw</button>
 
+    <br>
+
+    <select name="pollMode" id="pollMode">
+      <option value="auto">Auto (push)</option>
+      <option value="manual">Get (pull)</option>
+    </select>
+    <button onclick="updateMode()">Set mode</button>
+
     <h3>System</h3>
     CPU temp : <span class="CPU0Temp"></span> °C, <span class="CPU1Temp"></span> °C<br>
     CPU Volt : <span class="CPUVolt"></span> V <br>
@@ -146,6 +154,22 @@
     inverval_timer = setInterval(function() { 
       getOption()
     }, 5000)
+
+    async function updateMode(){
+      let mode = document.querySelector('#pollMode').value
+      await fetch('/control/mode', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nodeID: nodeID,
+          mode: mode
+        })
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+    }
 
 
     async function getOption() {

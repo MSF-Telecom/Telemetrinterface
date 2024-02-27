@@ -1,5 +1,12 @@
 const axios = require('axios')
 
+exports.mode = async function (nodeID, mode) {
+  await axios.post('http://http://127.0.0.1:8081/control/mode', {
+      nodeID: nodeID,
+      mode: mode
+  })
+}
+
 exports.outputs = async function (nodeID, outputs) {
   await axios.post('http://127.0.0.1:8081/control/outputs', {
       nodeID: nodeID,

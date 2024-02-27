@@ -33,7 +33,7 @@ router.post('/user/psswd', userController.userNewPasswordPOST)
 
 router.get('/control', panelController.controlPage)
 
-router.get('/control/mode', panelController.pollMode)
+router.post('/control/mode', panelController.pollMode)
 
 router.post('/control/IO/Out', panelController.OIOut)
 

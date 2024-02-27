@@ -10,10 +10,10 @@ import threading
 import json
 
 
-radioSerial = serial.Serial('/dev/tty.usbserial-145230', 9600, timeout = 2)
+radioSerial = serial.Serial('/dev/ttyUSB1', 9600, timeout = 2)
 
-ownID = 1107
-otherID = 1748
+ownID = 6210
+otherID = 4324
 msg = 'This is a test ! :D'
 
 radio = dPyMR.Transceiver(radioSerial, ownID)
@@ -59,8 +59,76 @@ def transmitMessage(msg, ID):
 
 app = Flask(__name__)
 
-@app.before_first_request
-def activate_job():
+def radioHandler():
+  while(True):
+    global teleData
+    global radio
+    inMessage = []
+    global txFlag
+    global rxFlag
+    if not txFlag:
+      print("waiting for message")
+      rxFlag = True
+      inMessage = radio.receiveMessage()
+      rxFlag = False
+    #print('<- {}'.format(inMessage))
+
+    if len(inMessage) > 0:
+      if inMessage[2].startswith('$'):
+        nodeID = inMessage[1]
+        msg = inMessage[2]
+        data = parser.parseFrame(msg)
+        if nodeID not in teleData:
+          teleData[nodeID] = {
+                "CPUTemp": [0, 0],
+                "CPUVolt": 0, "Vers" : 0.0, "Reset" : '',
+                "Push": False, "PushTime": 0,
+                "temp": 0, "hum": 0, "press": 0,
+                "accel" : [0.0, 0.0, 0.0],
+                "in1": False, "in2": False, "in3": False, "in4": False,
+                "out1": False, "out2": False, "out3": False, "out4": False,
+                "ain1": 0, "ain2": 0, "ain3": 0, "vsup": 0,
+                "led1" : [0,0,0], "led2" : [0,0,0], "led3" : [0,0,0],
+                "led4" : [0,0,0], "led5" : [0,0,0]}
+
+        if data[0] == 'SYS':
+          for key in data[1]:
+            teleData[nodeID][key] = data[1][key]
+    
+        elif data[0] == 'SET':
+          for key in data[1]:
+            teleData[nodeID][key] = data[1][key]
+
+        elif data[0] == 'ENV':
+          for key in data[1]:
+            teleData[nodeID][key] = data[1][key]
+
+        elif data[0] == 'IOI':
+          for key in data[1]:
+            teleData[nodeID][key] = data[1][key]
+
+        elif data[0] == 'IOO':
+          for key in data[1]:
+            teleData[nodeID][key] = data[1][key]
+            print(data[1][key])
+
+        elif data[0] == 'AIN':
+          for key in data[1]:
+            teleData[nodeID][key] = data[1][key]
+
+        elif data[0] == 'LED':
+          for key in data[1]:
+            teleData[nodeID][key] = data[1][key]
+
+        else:
+          print('Unknown frame: {}'.format(data))
+
+        #r = requests.post('http://localhost:8080/control/data', json=teleData)
+        #print(r.status_code, r.reason)
+
+
+
+with app.app_context():
   def run_job():
     radioHandler()
 
@@ -132,74 +200,6 @@ def nodes():
 @app.route('/', methods=['GET'])
 def home():
   return 'Nothing to see here, just working in the background...'
-
-def radioHandler():
-  while(True):
-    global teleData
-    global radio
-    inMessage = []
-    global txFlag
-    global rxFlag
-    if not txFlag:
-      print("waiting for message")
-      rxFlag = True
-      inMessage = radio.receiveMessage()
-      rxFlag = False
-    #print('<- {}'.format(inMessage))
-
-    if len(inMessage) > 0:
-      if inMessage[2].startswith('$'):
-        nodeID = inMessage[1]
-        msg = inMessage[2]
-        data = parser.parseFrame(msg)
-        if nodeID not in teleData:
-          teleData[nodeID] = {
-                "CPUTemp": [0, 0],
-                "CPUVolt": 0, "Vers" : 0.0, "Reset" : '',
-                "Push": False, "PushTime": 0,
-                "temp": 0, "hum": 0, "press": 0,
-                "accel" : [0.0, 0.0, 0.0],
-                "in1": False, "in2": False, "in3": False, "in4": False,
-                "out1": False, "out2": False, "out3": False, "out4": False,
-                "ain1": 0, "ain2": 0, "ain3": 0, "vsup": 0,
-                "led1" : [0,0,0], "led2" : [0,0,0], "led3" : [0,0,0],
-                "led4" : [0,0,0], "led5" : [0,0,0]}
-
-        if data[0] == 'SYS':
-          for key in data[1]:
-            teleData[nodeID][key] = data[1][key]
-    
-        elif data[0] == 'SET':
-          for key in data[1]:
-            teleData[nodeID][key] = data[1][key]
-
-        elif data[0] == 'ENV':
-          for key in data[1]:
-            teleData[nodeID][key] = data[1][key]
-
-        elif data[0] == 'IOI':
-          for key in data[1]:
-            teleData[nodeID][key] = data[1][key]
-
-        elif data[0] == 'IOO':
-          for key in data[1]:
-            teleData[nodeID][key] = data[1][key]
-            print(data[1][key])
-
-        elif data[0] == 'AIN':
-          for key in data[1]:
-            teleData[nodeID][key] = data[1][key]
-
-        elif data[0] == 'LED':
-          for key in data[1]:
-            teleData[nodeID][key] = data[1][key]
-
-        else:
-          print('Unknown frame: {}'.format(data))
-
-        #r = requests.post('http://localhost:8080/control/data', json=teleData)
-        #print(r.status_code, r.reason)
-
 
 
 if __name__ == "__main__":

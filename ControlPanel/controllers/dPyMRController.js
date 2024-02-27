@@ -7,6 +7,12 @@ exports.mode = async function (nodeID, mode) {
   })
 }
 
+exports.pullData = async function (nodeID) {
+  await axios.post('http://127.0.0.1:8081/control/pullData', {
+      nodeID: nodeID
+  })
+}
+
 exports.outputs = async function (nodeID, outputs) {
   await axios.post('http://127.0.0.1:8081/control/outputs', {
       nodeID: nodeID,

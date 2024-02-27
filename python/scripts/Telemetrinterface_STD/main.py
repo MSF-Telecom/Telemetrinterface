@@ -135,6 +135,15 @@ with app.app_context():
   thread = threading.Thread(target=run_job)
   thread.start()
 
+@app.route('/control/pullData', methods=['POST'])
+def pollData():
+  print("Web interface asked for a poll of the data")
+  data = json.loads(request.data.decode('utf-8'))
+  ID = int(data['nodeID'])
+  msg = '$GET'
+  transmitMessage(msg, ID)
+  return 'OK'
+
 @app.route('/control/mode', methods=['POST'])
 def setPollMode():
   data = json.loads(request.data.decode('utf-8'))

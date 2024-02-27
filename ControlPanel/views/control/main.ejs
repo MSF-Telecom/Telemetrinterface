@@ -18,6 +18,7 @@
       <option value="pull">Pull</option>
     </select>
     <button onclick="updateMode()">Set mode</button>
+    <button onclick="pullData()">Manual pull</button>
 
     <h3>System</h3>
     CPU temp : <span class="CPU0Temp"></span> °C, <span class="CPU1Temp"></span> °C<br>
@@ -169,6 +170,20 @@
       })
       .then(response => response.json())
       .then(data => console.log(data))
+    }
+
+    async function pullData(){
+      await fetch('/control/pullData', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nodeID: nodeID
+        })
+      })
+      .then(response => response.json())
+      .then(data => updateFields(data, nodeID))
     }
 
 

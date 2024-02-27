@@ -57,6 +57,23 @@ exports.pollMode = function (req, res) {
   }
 }
 
+exports.pullData = function (req, res) {
+  if(typeof req.session.user !== 'undefined') {
+    if(userDB.hasOwnProperty(req.session.user.name) && userDB[req.session.user.name].active) {
+      let nodeID = req.body.nodeID
+
+      dPyMRController.pullData(nodeID)
+      res.send(teleData)
+    }
+    else {
+      res.redirect('/login')
+    }
+  }
+  else{
+    res.redirect('/login')
+  }
+}
+
 exports.OIOut = function (req, res) {
   if(typeof req.session.user !== 'undefined') {
     if(userDB.hasOwnProperty(req.session.user.name) && userDB[req.session.user.name].active) {

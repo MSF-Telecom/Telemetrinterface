@@ -35,6 +35,8 @@ router.get('/control', panelController.controlPage)
 
 router.post('/control/mode', panelController.pollMode)
 
+router.post('/control/pullData', panelController.pullData)
+
 router.post('/control/IO/Out', panelController.OIOut)
 
 router.post('/control/IO/Buzzer', panelController.IOBuzzer)

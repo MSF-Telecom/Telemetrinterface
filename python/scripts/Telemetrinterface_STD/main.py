@@ -140,7 +140,7 @@ def setPollMode():
   data = json.loads(request.data.decode('utf-8'))
   print("Web interface updated mode")
   print(data)
-  msg = '$SYS,{},{}'.format(data['mode'], 15)
+  msg = '$MOD,{},{}'.format(data['mode'], 15)
   ID = int(data['nodeID'])
 
   transmitMessage(msg, ID)

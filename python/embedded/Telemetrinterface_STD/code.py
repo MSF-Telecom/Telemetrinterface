@@ -328,7 +328,7 @@ while True:
     timeNow = time.time()
     while time.time() - timeNow < nodeData["PushTime"]:
       inMSG = radio.receiveMessage()
-      print(inMSG)
+      print(inMSG, nodeData["Push"])
       listenForCommand(inMSG)
 
   else:

@@ -4,7 +4,6 @@ import rp2pio
 import adafruit_pioasm
 import neopixel
 from rainbowio import colorwheel
-import lib.dPyMR as dPyMR
 import busio
 
 
@@ -57,6 +56,13 @@ def rainbow_cycle(wait):
     pixels.show()
     time.sleep(wait)
 
+def setUIText(text):
+  bol = b'\x02'
+  eol = b'\x03'
+  command = '*SET,UI,TEXT,"{}"'.format(text)
+  data = bol + command.encode("utf-8") + eol
+  uart.write(data)
+
 textSnippets = ["This is a demonstration",
                 "of the Telemetrinterface",
                 "That could be used",
@@ -67,23 +73,24 @@ textSnippets = ["This is a demonstration",
                 "and store all of it",
                 "on a centralized server",
                 "to be integrated with",
-                "other systems"]
+                "other systems",
+                "Temp : " + str(bme280.temperature) + "°C",
+                "RH : " + str(bme280.relative_humidity) + "%"]
 
 while True:
-  for snippet in textSnippets:
-    radio.setUItext(snippet)
-    rainbow_cycle(0.005)  # Increase the number to slow down the rainbow
-  
   for _ in range(5):
     radio.setUItext("Telemetry demo !")
     color_chase((255, 0, 0), 0.1)
     color_chase((0, 255, 0), 0.1)
     color_chase((0, 0, 255), 0.1)
-    radio.setUItext("Temp : " + str(bme280.temperature) + "°C")
     color_chase((255, 255, 0), 0.1)
     color_chase((0, 255, 255), 0.1)
     color_chase((255, 0, 255), 0.1)
     color_chase((255, 255, 255), 0.1)
-    radio.setUItext("RH : " + str(bme280.relative_humidity) + "%")
     color_chase((0, 0, 0), 0.1)
+  for snippet in textSnippets:
+    radio.setUItext(snippet)
+    rainbow_cycle(0.005)  # Increase the number to slow down the rainbow
+  
+  
   

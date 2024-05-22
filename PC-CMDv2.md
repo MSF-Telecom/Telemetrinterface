@@ -13,22 +13,36 @@ Please note that depending on radio models and firmware versions, some commands 
 ### Get channel
 
 ```*GET,MCH,SEL```
+**Returns**
+```*NTF,MCH,SEL,1```
 
 ### Set channel
 
 ```*SET,MCH,SEL,18```
+**If channel selection valid returns**
+```*NTF,MCH,SEL,18```
+
+**If channel selection invalid returns**
+```*NTF,MCH,SEL,NG```
+
+
 
 ### Set UI text
 
 ```*SET,UI,TEXT,"Noice"```
 
+
 Return to default display:
 
 ```*SET,UI,TEXT,""```
 
+**No returns**
+
 ### Press UI key
 
-```*SET,UI,KEY,P3```
+```*SET,UI,KEY,P0```
+
+**No returns**
 
 ### Activate/Deactivate PTT
 
@@ -44,14 +58,31 @@ Return to default display:
 
 ```*GET,CTRL,SQL```
 
+**If closed returns**
+```*NTF,CTRL,SQL,CLOSE```
+
+**If open returns**
+```*NTF,CTRL,SQL,OPEN,+,RSSI```
+Where RSSI is the signal strength
+
 ### Get profile comment lines
 
-```GET,INFO,COMMENT,1```
-```GET,INFO,COMMENT,2```
+```*GET,INFO,COMMENT,1```
+```*GET,INFO,COMMENT,2```
+
+**Returns**
+```*NTF,INFO,COMMENT,COMMENTCONTENTS ```
+Where COMMENTCONTENTS is the profile's comment for each line
 
 ### Get Tx/Rx status
 
 ```*GET,CTRL,TX```
+
+**If Tx disabled, returns**
+```*NTF,CTRL,TX,OFF```
+
+**If Tx enabled, returns**
+```*NTF,CTRL,TX,ON```
 
 ### Get own ID
 

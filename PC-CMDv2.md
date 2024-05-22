@@ -58,18 +58,26 @@ Returns
 ```*NTF,INFO,COMMENT,[COMMENTCONTENTS] ```
 Where COMMENTCONTENTS is the profile's comment for each line
 
+### Get Electronic Serial Number (ESN)
+```*GET,INFO,ESN```
+Returns:
+```*NTF,INFO,ESN,[SERIALNO]```
+Where [SERIALNO] is the ESN
+
+
+
 ## Channel (MCH)
 
 
 ### Get channel number
 ```*GET,MCH,SEL```
-Returns
+Returns:
 ```*NTF,MCH,SEL,[CHANNELNR]```
 Where CHANNELNR is the channel on which the radio is.
 
 ### Set channel
 ```*SET,MCH,SEL,[CHANNELNR]```
-Where CHANNELNR is the channel order number (those are added between zones).
+Where CHANNELNR is the channel order number.
 If channel selection invalid returns:
 ```*NTF,MCH,SEL,NG```
 
@@ -77,6 +85,12 @@ If channel selection invalid returns:
 ```*GET,MCH,FREQ```
 Returns:
 ```*NTF,MCH,FREQ,[FREQTX],[FREQRX]```
+Where FREQTX and FREQRX are in Hz. 
+
+### Set channel frequency
+```*SET,MCH,FREQ,[FREQTX],[FREQRX]```
+Where FREQTX and FREQRX are in Hz. Please note this is temporary and will revert back to the profile's frequency once channel is changed.
+No return.
 
 ### Get channel CTCSS
 ```*GET,MCH,CTONE```
@@ -93,15 +107,26 @@ Where CTONEVALUE is either OFF or the CTCSS value.
 Where [TEXT] is the text you want to display. 12 chars per line.
 Return to default display:
 ```*SET,UI,TEXT,""```
-No returns.
+No return.
 
 ### Press key
 ```*SET,UI,KEY,[KEY]```
 Where [KEY] is the name of the button to press
-No returns.
+No return.
 
 ### Activate/Deactivate PTT
 ```*SET,UI,PTT,[ON-OFF]```
+
+### Set UI volume
+```*SET,UI,AFVOL,[VOLUME]```
+Where volume is from 0-255
+No return
+
+### Get UI volume
+```GET,UI,AFVOL```
+Returns:
+```*NTF,UI,AFVOL,[VOLUME]```
+Where volume is from 0-255
 
 ## dPMR digital radio (DPMR)
 

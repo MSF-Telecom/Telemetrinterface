@@ -1,7 +1,8 @@
 
 # ICOM PC-CMD v2 Protocol info
 
-A small list of usefull commands used in the dPyMR lib., reverse-engineered from an ICOM IC-F5061D radio. Other commands were guessed based on the logic of echoed commands (NTF)
+A small list of usefull commands used in the dPyMR lib., reverse-engineered from an ICOM IC-F5061D radio. Other commands were guessed based on the logic of echoed commands (NTF). 
+Please note that depending on radio models and firmware versions, some commands might not be implemented.
 
 ## Commands
 
@@ -42,6 +43,11 @@ Return to default display:
 ### Get Squelch status
 
 ```*GET,CTRL,SQL```
+
+### Get profile comment lines
+
+```GET,INFO,COMMENT,1```
+```GET,INFO,COMMENT,2```
 
 ### Get Tx/Rx status
 

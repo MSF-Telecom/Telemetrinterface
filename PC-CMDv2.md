@@ -117,16 +117,20 @@ No return.
 ### Activate/Deactivate PTT
 ```*SET,UI,PTT,[ON-OFF]```
 
-### Set UI volume
+### Set volume
 ```*SET,UI,AFVOL,[VOLUME]```
 Where volume is from 0-255
 No return
 
-### Get UI volume
-```GET,UI,AFVOL```
+### Get volume
+```*GET,UI,AFVOL```
 Returns:
 ```*NTF,UI,AFVOL,[VOLUME]```
 Where volume is from 0-255
+
+### Reset radio
+```*SET,UI,RESET```
+No return 
 
 ## dPMR digital radio (DPMR)
 

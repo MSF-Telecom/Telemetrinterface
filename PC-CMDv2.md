@@ -1,8 +1,34 @@
 
 # ICOM PC-CMD v2 Protocol info
 
-A small list of usefull commands used in the dPyMR lib., reverse-engineered from an ICOM IC-F5061D radio. Other commands were guessed based on the logic of echoed commands (NTF). 
+This document is a « Clean-Room” approach to reverse-engineering the CMD protocol used by ICOM Radios. This has been written with no access to internal ICOM tools nor documentation, only by analyzing the serial data out while interacting with the radios and additional control interfaces (+ educated guesses). 
 Please note that depending on radio models and firmware versions, some commands might not be implemented.
+
+## General layout
+A PC-CMDV2 input line starts with an ASCII STX (0x02) and ends with an ASCII ETX (0x03). Its length can vary, depending on the command being sent. The parameters are comma-separated. Here’s a typical example:
+
+```\0x02*NTF,CTRL,SQL,OPEN,5,-91\0x03```
+
+Where: 
+- ```\0X02``` is the START field
+- ```*NTF``` is the HEAD field
+- ```CTRL``` is the TYPE field, aka command type
+- ```SQL,OPEN,5,-91``` is DATA-ARGS, data associate to the command
+- ```\0x03``` is the END field
+
+### HEAD fields
+- ```*NTF```: always returned by the radio when getting a command result or a status
+- ```*SET```: sent by the controller to set a specific setting, channel, status, trigger a message. It might or might not send a result
+- ```*GET```: requests data from the radio: squelch status, internal settings, channel selection, etc. It always returns.
+
+### TYPE fields
+- CTRL: Related to general settings
+- INFO: Related to general profile data
+-	MCH: Related to channel control settings
+-	UI: Related to user interface settings
+-	DPMR: Related to dPMR-specific commands
+-	IDAS: Related to IDAS (NXDN)-specific commands
+
 
 ## Commands
 
@@ -46,8 +72,7 @@ Return to default display:
 
 ### Activate/Deactivate PTT
 
-```*SET,UI,PTT,ON```
-```*SET,UI,PTT,OFF```
+```*SET,UI,PTT,[ON-OFF]```
 
 
 ### Send status number

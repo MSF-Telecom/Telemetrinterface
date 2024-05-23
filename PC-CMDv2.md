@@ -65,7 +65,7 @@ Returns:
 Where [SERIALNO] is the ESN
 
 ### Get firmware revision number (REV)
-```*GET,INFO,REV````
+```*GET,INFO,REV```
 Returns:
 ```*NTF,INFO,REV,[FWVERSION],[CHECKSUM]```
 Where FWVERSION is the firmware's version number, CHECKUM is the firmware's checksum

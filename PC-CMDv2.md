@@ -1,6 +1,6 @@
 
 # ICOM PC-CMD v2 Protocol - Introduction
-This document is a « Clean-Room” approach to reverse-engineering the CMD protocol used by ICOM Radios. This has been written with no access to internal ICOM tools nor documentation, only by analyzing the serial data out while interacting with the radios and additional control interfaces (+ educated guesses). 
+This document is a « Clean-Room” approach to reverse-engineering the CMD protocol used by ICOM Radios. This has been written with no access to internal ICOM tools nor documentation, only by analyzing the serial data out while interacting with the radios and additional control interfaces (+ hours of typing random commands to see a reaction on the radio). 
 Please note that depending on radio models and firmware versions, some commands might not be implemented.
 
 # Command layout
@@ -64,6 +64,12 @@ Returns:
 ```*NTF,INFO,ESN,[SERIALNO]```
 Where [SERIALNO] is the ESN
 
+### Get firmware revision number (REV)
+```*GET,INFO,REV````
+Returns:
+```*NTF,INFO,REV,[FWVERSION],[CHECKSUM]```
+Where FWVERSION is the firmware's version number, CHECKUM is the firmware's checksum
+
 
 
 ## Channel (MCH)
@@ -98,6 +104,16 @@ Returns:
 ```*GET,MCH,CTONE,[CTONEVALUE]```
 Where CTONEVALUE is either OFF or the CTCSS value.
 
+### Get channel bandwidth
+```*GET,MCH,WNM```
+Returns:
+```*NTF,MCH,WNM,[MODE]```
+Where MODE is either "Wide" or "Narrow". 
+
+### Set channel bandwidth
+```*SET,MCH,WNM,[MODE]```
+Where MODE is either "Wide" or "Narrow". 
+No return.
 
 
 ## User interface (UI)

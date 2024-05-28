@@ -116,6 +116,17 @@ Where MODE is either "Wide" or "Narrow".
 No return.
 
 
+### Get RF Power
+```*GET,MCH,RFPWR```
+Returns:
+```*NTF,MCH,RFPWR,[PWR]```
+Where PWR is either "LOW1", "LOW2" or "HIGH". 
+
+### Set RF Power
+```*SET,MCH,RFPWR,[PWR]```
+Where PWR is either "LOW1", "LOW2" or "HIGH". 
+No return.
+
 ## User interface (UI)
 
 ### Set UI text

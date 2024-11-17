@@ -169,13 +169,14 @@ No return
 
 ## NXDN digital radio (NXDN)
 
-## Unknown
+### Send status number
+```*SET,IDAS,TXSTAT,IND,2,1,2,ACK```
+
+### Send message
+```*SET,IDAS,TXMSG,IND,2,1,MSG,"This is a test",ACK```
 
 ### Get own ID
 > not found yet
-
-### Set TX Power
-> Not found yet
 
 ### Set GPS position and transmit it
 > Not found yet

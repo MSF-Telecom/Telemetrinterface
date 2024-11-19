@@ -175,8 +175,14 @@ No return
 ### Send message
 ```*SET,IDAS,TXMSG,IND,2,1,MSG,"This is a test",ACK```
 
+### Stun radio
+```*SET,IDAS,TXSTUN,IND,1892```
+
+### Set radio ID (needed to receive text messages)
+```*SET,IDAS,SENDID,TG,9900,65519```
+
 ### Get own ID
-> not found yet
+```*GET,IDAS,SENDID,TG```
 
 ### Set GPS position and transmit it
 > Not found yet
